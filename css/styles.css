@@ -13,6 +13,8 @@ INFO:
 /****************************************************************************** COMMON_STYLES */
 body{
 	background: #000;
+
+	color: #fff;
 }
 
 .space .hide{
@@ -27,7 +29,8 @@ body{
 
 
 /****************************************************************************** GLOBAL_layout */
-.space{
+
+.main_container{
 	width: 900px;
 	height: 600px;
 	overflow: hidden;
@@ -37,3 +40,20 @@ body{
 
 
 /****************************************************************************** GLOBAL_blocks: field */
+
+
+/****************************************************************************** GLOBAL_blocks: informer */
+.informer_table{
+	width: 100%;
+	border: 1px solid #ccc;
+}
+
+	.informer_table td:first-child{
+		width: 70%;
+	}
+
+	.informer_table td{
+		border: 1px solid #ccc;
+		width: 50%;
+		padding: 5px;
+	}

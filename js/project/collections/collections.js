@@ -1,5 +1,12 @@
-APP.CellCollection = Backbone.Collection.extend({
+APP.RocketssCollection = Backbone.Collection.extend({
 
-  model: APP.CellModel,
+  model: APP.BulletModel,
 
 });
+
+APP.EnemiesCollection = Backbone.Collection.extend({
+
+  model: APP.EnemyModel,
+
+});
+

@@ -18,7 +18,7 @@ APP.EnemyModel = Backbone.Model.extend({
 });
 
 
-APP.BulletModel = Backbone.Model.extend({
+APP.RocketModel = Backbone.Model.extend({
   
   defaults: {
     xCoord: undefined,
