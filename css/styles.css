@@ -32,15 +32,43 @@ body{
 
 .main_container{
 	width: 900px;
-	height: 600px;
 	overflow: hidden;
 	margin: 20px auto;
 }
 
+.row{
+	padding-bottom: 30px;
+}
+
+
+
+/****************************************************************************** GLOBAL_blocks: player */
+.player{
+	background: url('../images/player.png') left top no-repeat;
+	background-size: contain;
+	width: 50px;
+	height: 20px;
+	position: absolute;
+	top: 40px;
+	left: 10px;
+}
 
 
 /****************************************************************************** GLOBAL_blocks: field */
+.field{
+	width: 100%;
+	border: 1px solid #ccc;	
+	height: 400px;
+	position: relative;
+}
 
+
+/****************************************************************************** GLOBAL_blocks: info_line */
+.info_line{
+	width: 100%;
+	border: 1px solid #ccc;	
+	padding: 5px;
+}
 
 /****************************************************************************** GLOBAL_blocks: informer */
 .informer_table{

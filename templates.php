@@ -1,19 +1,12 @@
 <script type="text/template" id="spaceTpl">
   <div class="container main_container">
     <div class="row">
-      <div class="col-xs-12">
-        <strong>running line info</strong>
-      </div>
+      <div class="col-xs-12" id="infoLineWrap"></div>
     </div>
 
     <div class="row">
-      <div class="col-xs-9" id="spaceCont">
-      space
-      </div>
-
-      <div class="col-xs-3" id="informerCont">
-      informer
-      </div>
+      <div class="col-xs-9" id="fieldWrap"></div>
+      <div class="col-xs-3" id="informerWrap"></div>
     </div>        
   </div>
 </script>
@@ -46,4 +39,13 @@
       <td></td>
     </tr>             
   </table>
+</script>
+
+
+<script type="text/template" id="infoLineTpl">
+  <div class="info_line" id="infoLine">running line info</div>
+</script>
+
+<script type="text/template" id="fieldTpl">
+  <div class="field" id="field"></div>
 </script>
