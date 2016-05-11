@@ -1,0 +1,39 @@
+/*
+INFO: 
+	project: tic tac toe 1
+	browsers: opera/chrome/FF/ie9/safari
+	width: 
+	columns:
+	markup: Sergey Kalinin 05/2016 (prozaik81-2@yandex.ru)
+	use: jq, bootstrap, underscore, backbone
+	desc: 	
+	version 1
+*/	
+
+/****************************************************************************** COMMON_STYLES */
+body{
+	background: #000;
+}
+
+.space .hide{
+	display: none !important;
+}
+
+.space .show{
+	display: block !important;
+}
+
+
+
+
+/****************************************************************************** GLOBAL_layout */
+.space{
+	width: 900px;
+	height: 600px;
+	overflow: hidden;
+	margin: 20px auto;
+}
+
+
+
+/****************************************************************************** GLOBAL_blocks: field */
