@@ -2,7 +2,7 @@
 <script src="js/bootstrap-3/js/bootstrap.min.js"></script> 
 <script src="js/underscore-min.js"></script>
 <script src="js/backbone-min.js"></script>
-<script src="js/backbone.localStorage-min.js"></script>
+<!-- <script src="js/backbone.localStorage-min.js"></script> -->
 
 <script>
   window.APP = window.APP || {};    

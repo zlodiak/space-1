@@ -50,7 +50,7 @@ APP.SpaceView = Backbone.View.extend({
       console.log('rm', playerRocketModel)
 
       if(this.rocketCollection.add(playerRocketModel)) {
-        playerRocketModel.save();
+        //playerRocketModel.save();
       };
       console.log('rc2', this.rocketCollection)
 
