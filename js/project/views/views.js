@@ -9,7 +9,6 @@ APP.SpaceView = Backbone.View.extend({
     this.playerShipView = new APP.PlayerShipView({model: this.playerModel});
 
     this.rocketCollection = new APP.RocketsCollection();
-    //this.rocketCollection.fetch();
 
     this.render();    
 
@@ -36,22 +35,18 @@ APP.SpaceView = Backbone.View.extend({
   },  
 
   move: function(e) { 
-    if(e.keyCode == 32) {
-      console.log('fire') 
-
-      var playerRocketModel = new APP.PlayerRocketModel({
-        xCoord: this.playerModel.get('xCoord'),
-        yCoord: this.playerModel.get('yCoord')
-      });
-
-      
-
-      console.log('rc', this.rocketCollection)
-      console.log('rm', playerRocketModel)
+    if(e.keyCode == 32) { console.log('fire') 
+      var playerShipWidth = this.$el.find('#player').width(),
+          playerRocketModel = new APP.PlayerRocketModel({
+            xCoord: this.playerModel.get('xCoord') + playerShipWidth,
+            yCoord: this.playerModel.get('yCoord')
+          });
 
       if(this.rocketCollection.add(playerRocketModel)) {
-        //playerRocketModel.save();
+        var playerRocket = new APP.PlayerRocketView({model: playerRocketModel});
+        this.$el.find('#field').append(playerRocket.render().el);
       };
+
       console.log('rc2', this.rocketCollection)
 
     } else {
@@ -189,6 +184,27 @@ APP.PlayerShipView = Backbone.View.extend({
     return this;
   }
 
+});
+
+
+APP.PlayerRocketView = Backbone.View.extend({  
+
+  initialize: function() {     
+
+  },
+
+  className: 'player_rocket',
+
+  id: 'playerRocket',
+
+  render: function() {    console.log('ren', this.model)  
+    this.$el.css({
+      top: this.model.get('yCoord'),
+      left: this.model.get('xCoord')
+    }).html('r');   
+
+    return this;
+  }
 
 });
 

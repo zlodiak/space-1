@@ -45,6 +45,11 @@ body{
 
 
 
+/****************************************************************************** GLOBAL_blocks: player_rocket */
+.player_rocket{
+	position: absolute;
+}
+
 /****************************************************************************** GLOBAL_blocks: player */
 .player{
 	background: url('../images/player.png') left top no-repeat;
