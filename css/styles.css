@@ -47,6 +47,10 @@ body{
 
 /****************************************************************************** GLOBAL_blocks: player_rocket */
 .player_rocket{
+	background: url('../images/player_rocket.png') left top no-repeat;
+	background-size: contain;
+	width: 20px;
+	height: 10px;	
 	position: absolute;
 }
 

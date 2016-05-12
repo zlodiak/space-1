@@ -1,6 +1,8 @@
 APP.SpaceView = Backbone.View.extend({  
 
   initialize: function() {   
+    var self = this;
+
     this.playerModel =    new APP.PlayerModel();
 
     this.infoLineView =   new APP.InfolineView();
@@ -14,7 +16,9 @@ APP.SpaceView = Backbone.View.extend({
 
     this.$el.attr('tabindex', 1).focus();    
 
-    setInterval(this.makeMoves, 1000);
+    setInterval(function() {
+      self.makeMoves(self.playerRocketCollection)
+    }, 100);
   },    
 
   template: _.template($('#spaceTpl').html()),
@@ -35,11 +39,11 @@ APP.SpaceView = Backbone.View.extend({
   },  
 
   move: function(e) { 
-    if(e.keyCode == 32) { console.log('fire') 
+    if(e.keyCode == 32) { //console.log('fire') 
       var playerShipWidth = this.$el.find('#player').width(),
           playerRocketModel = new APP.PlayerRocketModel({
-            xCoord: this.playerModel.get('xCoord') + playerShipWidth,
-            yCoord: this.playerModel.get('yCoord')
+            xCoord: this.playerModel.get('xCoord') + playerShipWidth - 5,
+            yCoord: this.playerModel.get('yCoord') + 13
           });
 
       if(this.playerRocketCollection.add(playerRocketModel)) {
@@ -47,7 +51,7 @@ APP.SpaceView = Backbone.View.extend({
         this.$el.find('#field').append(playerRocket.render().el);
       };
 
-      console.log('rc2', this.playerRocketCollection)
+      //console.log('rc2', this.playerRocketCollection)
 
     } else {
       var newCoords = this.computeCoords(e.keyCode);
@@ -107,17 +111,18 @@ APP.SpaceView = Backbone.View.extend({
     };
   },
 
-  makeMoves: function() { 
-    console.log('makeMoves', this.playerRocketCollection)
+  makeMoves: function(playerRocketCollection) { console.log('mm')
+    //console.log('makeMoves', playerRocketCollection)
 
-    
+    playerRocketCollection.each(function(model) { 
+        var xCoord = model.get('xCoord'),
+            xCoordNew = xCoord + 10;
+
+        model.set({xCoord: xCoordNew});
+    });
 
 
 
-
-    _.each(this.playerRocketCollection, function() {
-
-    }); 
   }
  
 
@@ -190,18 +195,18 @@ APP.PlayerShipView = Backbone.View.extend({
 APP.PlayerRocketView = Backbone.View.extend({  
 
   initialize: function() {     
-
+    this.listenTo(this.model, 'change', this.render);
   },
 
   className: 'player_rocket',
 
   id: 'playerRocket',
 
-  render: function() {    console.log('ren', this.model)  
+  render: function() {    
     this.$el.css({
       top: this.model.get('yCoord'),
       left: this.model.get('xCoord')
-    }).html('r');   
+    }).html();   
 
     return this;
   }
