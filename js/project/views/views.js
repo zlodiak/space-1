@@ -136,8 +136,9 @@ APP.SpaceView = Backbone.View.extend({
     // stars moves 
     //console.dir(self.starsCollection)
     self.starsCollection.each(function(model) { 
-      var xCoord = model.get('xCoord'),
-          xCoordNew = xCoord - 3,
+      var speed = model.get('speed'),
+          xCoord = model.get('xCoord'),
+          xCoordNew = xCoord - speed,
           fieldWidth = self.$el.find('#field').width(),
           fieldHeight = self.$el.find('#field').height();
 
@@ -154,19 +155,24 @@ APP.SpaceView = Backbone.View.extend({
 
   starsInitialize: function() {     
     var starsCnt = 100,
+        starSpeedMax = 3,
+        starSpeedMin = 0,
         starModel,
         xCoordRandom,
         yCoordRandom,
+        speedRandom,
         fieldWidth = this.$el.find('#field').width(),
         fieldHeight = this.$el.find('#field').height();
 
     for(var i = 0; i < starsCnt; i++) {
       xCoordRandom = APP.helper.randomIntFromZero(fieldWidth);
       yCoordRandom = APP.helper.randomIntFromZero(fieldHeight);
+      speedRandom = APP.helper.randomIntFromInterval(starSpeedMin, starSpeedMax);
 
       starModel = new APP.StarModel({
         xCoord: xCoordRandom,
-        yCoord: yCoordRandom
+        yCoord: yCoordRandom,
+        speed: speedRandom
       });
 
       if(this.starsCollection.add(starModel)) {

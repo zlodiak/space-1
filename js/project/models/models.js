@@ -50,7 +50,8 @@ APP.StarModel = Backbone.Model.extend({
   
   defaults: {
     xCoord: undefined,
-    yCoord: undefined
+    yCoord: undefined,
+    speed: undefined
   }        
 
 });
