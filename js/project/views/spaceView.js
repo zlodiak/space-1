@@ -28,7 +28,7 @@ APP.SpaceView = Backbone.View.extend({
 
   render: function() {    
     this.$el.html(this.template());  
-    this.$el.find('#informerWrap').html(this.informerView.render().el);  
+    this.$el.find('#informerWrap').html(this.informerView.el);  
     this.$el.find('#infoLineWrap').html(this.infoLineView.render().el);  
     this.$el.find('#fieldWrap').html(this.fieldView.render().el);  
 
@@ -43,6 +43,15 @@ APP.SpaceView = Backbone.View.extend({
 
   move: function(e) { 
     if(e.keyCode == 32) { 
+      var playerRocketsCnt = this.playerModel.get('rockets');
+
+      playerRocketsCnt--;
+      if(playerRocketsCnt < 0) { 
+        return; 
+      } else {
+        this.playerModel.set({rockets: playerRocketsCnt})
+      };
+
       var playerShipWidth = this.$el.find('#player').width(),
           playerShipHeight = this.$el.find('#player').height(),
           playerRocketModel = new APP.PlayerRocketModel({
@@ -54,9 +63,6 @@ APP.SpaceView = Backbone.View.extend({
         var playerRocket = new APP.PlayerRocketView({model: playerRocketModel});
         this.$el.find('#field').append(playerRocket.render().el);
       };
-
-      //console.log('rc2', this.playerRocketCollection)
-
     } else {
       var newCoords = this.computeCoords(e.keyCode);
 
@@ -188,121 +194,5 @@ APP.SpaceView = Backbone.View.extend({
  
 
 });
-
-
-APP.InformerView = Backbone.View.extend({  
-
-  template: _.template($('#informerTpl').html()),
-
-  render: function() {    
-    this.$el.html(this.template());      
-    return this;
-  }
-
-});
-
-
-APP.InfolineView = Backbone.View.extend({  
-
-  template: _.template($('#infoLineTpl').html()),
-
-  render: function() {    
-    this.$el.html(this.template());      
-    return this;
-  }
-
-});
-
-
-APP.FieldView = Backbone.View.extend({  
-
-  className: 'field',
-
-  id: 'field',
-
-  render: function() {    
-    this.$el.html();      
-    return this;
-  }
-
-});
-
-
-APP.PlayerShipView = Backbone.View.extend({  
-
-  initialize: function() {       
-    
-    this.listenTo(this.model, 'change', this.render);
-
-
-  },
-
-  className: 'player',
-
-  id: 'player',
-
-  render: function() {    
-    this.$el.css({
-      top: this.model.get('yCoord'),
-      left: this.model.get('xCoord')
-    }).html();   
-
-    return this;
-  }
-
-});
-
-
-APP.PlayerRocketView = Backbone.View.extend({  
-
-  initialize: function() {     
-    this.listenTo(this.model, 'change', this.render);
-    this.listenTo(this.model, 'destroy', this.destroyElem);
-  },
-
-  className: 'player_rocket',
-
-  id: 'playerRocket',
-
-  render: function() {    
-    this.$el.css({
-      top: this.model.get('yCoord'),
-      left: this.model.get('xCoord')
-    }).html();   
-
-    return this;
-  },
-
-  destroyElem: function() {   
-    this.$el.remove();
-  }
-
-});
-
-
-APP.StarView = Backbone.View.extend({  
-
-  initialize: function() {       
-    this.listenTo(this.model, 'change', this.render);
-    this.listenTo(this.model, 'destroy', this.destroyElem);
-  },
-
-  className: 'star',
-
-  render: function() {    
-    this.$el.css({
-      top: this.model.get('yCoord'),
-      left: this.model.get('xCoord')
-    }).html();   
-
-    return this;
-  },
-
-  destroyElem: function() {   
-    this.$el.remove();
-  }
-
-});
-
 
 

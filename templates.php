@@ -16,22 +16,22 @@
   <table class="informer_table" id="informerTable">
     <tr>
       <td>Score: </td>
-      <td></td>
+      <td><%= score %></td>
     </tr>
 
     <tr>
       <td>Rockets: </td>
-      <td></td>
+      <td><%= rockets %></td>
     </tr>   
 
     <tr>
       <td>Energy: </td>
-      <td></td>
+      <td><%= energy %></td>
     </tr>   
 
     <tr>
       <td>Speed: </td>
-      <td></td>
+      <td><%= speed %></td>
     </tr>             
   </table>
 </script>

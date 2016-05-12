@@ -10,7 +10,9 @@
 
 <script src="js/project/models/models.js"></script> 
 <script src="js/project/collections/collections.js"></script> 
-<script src="js/project/views/views.js"></script> 
+<script src="js/project/views/spaceView.js"></script> 
+<script src="js/project/views/widgetsViews.js"></script> 
+<script src="js/project/views/elementsViews.js"></script> 
 <script src="js/project/helper.js"></script> 
 
 <script>
