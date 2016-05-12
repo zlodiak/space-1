@@ -48,25 +48,35 @@ APP.SpaceView = Backbone.View.extend({
   },
 
   computeCoords: function(keyCode) { 
-    var yCoord = this.playerModel.get('yCoord'),
-        xCoord = this.playerModel.get('xCoord'),
-        speed = this.playerModel.get('speed');
+    var yCoordNew,
+        xCoordNew,
+        yCoord =  this.playerModel.get('yCoord'),
+        xCoord =  this.playerModel.get('xCoord'),
+        speed =   this.playerModel.get('speed');
 
     switch(keyCode) {
       case 38:  
-        yCoord -= speed;
+        yCoordNew = yCoord - speed;        
+        if(yCoordNew <= 0) { yCoordNew = yCoord };
+        xCoordNew = xCoord;
         break;
 
       case 40: 
-        yCoord += speed;
+        yCoordNew = yCoord + speed;
+        if(yCoordNew >= 378) { yCoordNew = yCoord };
+        xCoordNew = xCoord;
         break;
 
       case 37: 
-        xCoord -= speed;
+        xCoordNew = xCoord - speed;
+        if(xCoordNew <= 0) { xCoordNew = xCoord };
+        yCoordNew = yCoord;
         break;
 
       case 39: 
-        xCoord += speed;
+        xCoordNew = xCoord + speed;
+        if(xCoordNew >= 597) { xCoordNew = xCoord };
+        yCoordNew = yCoord;
         break;                
 
       default:
@@ -75,8 +85,8 @@ APP.SpaceView = Backbone.View.extend({
     };
 
     return {
-      xCoord: xCoord, 
-      yCoord: yCoord
+      xCoord: xCoordNew, 
+      yCoord: yCoordNew
     };
   }
  
