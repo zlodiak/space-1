@@ -17,7 +17,7 @@ APP.SpaceView = Backbone.View.extend({
     this.$el.attr('tabindex', 1).focus();    
 
     setInterval(function() {
-      self.makeMoves(self.playerRocketCollection)
+      self.makeMoves(self)
     }, 100);
   },    
 
@@ -41,9 +41,10 @@ APP.SpaceView = Backbone.View.extend({
   move: function(e) { 
     if(e.keyCode == 32) { //console.log('fire') 
       var playerShipWidth = this.$el.find('#player').width(),
+          playerShipHeight = this.$el.find('#player').height(),
           playerRocketModel = new APP.PlayerRocketModel({
             xCoord: this.playerModel.get('xCoord') + playerShipWidth - 5,
-            yCoord: this.playerModel.get('yCoord') + 13
+            yCoord: this.playerModel.get('yCoord') + playerShipHeight -7
           });
 
       if(this.playerRocketCollection.add(playerRocketModel)) {
@@ -70,10 +71,13 @@ APP.SpaceView = Backbone.View.extend({
         xCoord =  this.playerModel.get('xCoord'),
         speed =   this.playerModel.get('speed');
 
+    var playerShipWidth = this.$el.find('#player').width(),
+        playerShipHeight = this.$el.find('#player').height();        
+
     var topBoundCoord = 0,
         leftBoundCoord = 0,    
-        bottomBoundCoord = this.$el.find('#field').height() - 20,
-        rightBoundCoord = this.$el.find('#field').width() - 50;
+        bottomBoundCoord = this.$el.find('#field').height() - playerShipHeight,
+        rightBoundCoord = this.$el.find('#field').width() - playerShipWidth;
 
     switch(keyCode) {
       case 38:  
@@ -111,18 +115,19 @@ APP.SpaceView = Backbone.View.extend({
     };
   },
 
-  makeMoves: function(playerRocketCollection) { console.log('mm')
-    //console.log('makeMoves', playerRocketCollection)
+  makeMoves: function(self) { 
+    self.playerRocketCollection.each(function(model) { 
+      var xCoord = model.get('xCoord'),
+          xCoordNew = xCoord + 10,
+          fieldWidth = self.$el.find('#field').width(),
+          playerRocketWidth = self.$el.find('#playerRocket').first().width();
 
-    playerRocketCollection.each(function(model) { 
-        var xCoord = model.get('xCoord'),
-            xCoordNew = xCoord + 10;
-
+      if(xCoordNew < (fieldWidth - playerRocketWidth)) {
         model.set({xCoord: xCoordNew});
+      } else {  
+        model.destroy();
+      };        
     });
-
-
-
   }
  
 
@@ -196,6 +201,7 @@ APP.PlayerRocketView = Backbone.View.extend({
 
   initialize: function() {     
     this.listenTo(this.model, 'change', this.render);
+    this.listenTo(this.model, 'destroy', this.destroyElem);
   },
 
   className: 'player_rocket',
@@ -209,6 +215,10 @@ APP.PlayerRocketView = Backbone.View.extend({
     }).html();   
 
     return this;
+  },
+
+  destroyElem: function() {   
+    this.$el.remove();
   }
 
 });
