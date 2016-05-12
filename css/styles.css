@@ -51,6 +51,7 @@ body{
 	width: 1px;
 	height: 1px;	
 	position: absolute;
+	z-index: 0;
 }
 
 /****************************************************************************** GLOBAL_blocks: player_rocket */
@@ -60,6 +61,7 @@ body{
 	width: 20px;
 	height: 10px;	
 	position: absolute;
+	z-index: 100;
 }
 
 /****************************************************************************** GLOBAL_blocks: player */
@@ -69,8 +71,7 @@ body{
 	width: 50px;
 	height: 20px;
 	position: absolute;
-/*	top: 40px;
-	left: 10px;*/
+	z-index: 100;
 }
 
 

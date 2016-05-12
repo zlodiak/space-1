@@ -138,12 +138,16 @@ APP.SpaceView = Backbone.View.extend({
     self.starsCollection.each(function(model) { 
       var xCoord = model.get('xCoord'),
           xCoordNew = xCoord - 3,
-          fieldWidth = self.$el.find('#field').width();
+          fieldWidth = self.$el.find('#field').width(),
+          fieldHeight = self.$el.find('#field').height();
 
       if(xCoordNew > 0) {
         model.set({xCoord: xCoordNew});
       } else {  
-        //model.destroy();
+        model.set({
+          xCoord: fieldWidth,
+          yCoord: APP.helper.randomIntFromZero(fieldHeight),
+        });
       };        
     });    
   },
@@ -269,10 +273,8 @@ APP.PlayerRocketView = Backbone.View.extend({
 APP.StarView = Backbone.View.extend({  
 
   initialize: function() {       
-    
     this.listenTo(this.model, 'change', this.render);
-
-
+    this.listenTo(this.model, 'destroy', this.destroyElem);
   },
 
   className: 'star',
@@ -284,6 +286,10 @@ APP.StarView = Backbone.View.extend({
     }).html();   
 
     return this;
+  },
+
+  destroyElem: function() {   
+    this.$el.remove();
   }
 
 });
