@@ -41,10 +41,6 @@ APP.SpaceView = Backbone.View.extend({
         yCoord: newCoords.yCoord
       });      
     };
-
-    
-
-
   },
 
   computeCoords: function(keyCode) { 
@@ -54,28 +50,33 @@ APP.SpaceView = Backbone.View.extend({
         xCoord =  this.playerModel.get('xCoord'),
         speed =   this.playerModel.get('speed');
 
+    var topBoundCoord = 0,
+        leftBoundCoord = 0,    
+        bottomBoundCoord = this.$el.find('#field').height() - 20,
+        rightBoundCoord = this.$el.find('#field').width() - 50;
+
     switch(keyCode) {
       case 38:  
         yCoordNew = yCoord - speed;        
-        if(yCoordNew <= 0) { yCoordNew = yCoord };
+        if(yCoordNew <= topBoundCoord) { yCoordNew = yCoord };
         xCoordNew = xCoord;
         break;
 
       case 40: 
         yCoordNew = yCoord + speed;
-        if(yCoordNew >= 378) { yCoordNew = yCoord };
+        if(yCoordNew >= bottomBoundCoord) { yCoordNew = yCoord };
         xCoordNew = xCoord;
         break;
 
       case 37: 
         xCoordNew = xCoord - speed;
-        if(xCoordNew <= 0) { xCoordNew = xCoord };
+        if(xCoordNew <= leftBoundCoord) { xCoordNew = xCoord };
         yCoordNew = yCoord;
         break;
 
       case 39: 
         xCoordNew = xCoord + speed;
-        if(xCoordNew >= 597) { xCoordNew = xCoord };
+        if(xCoordNew >= rightBoundCoord) { xCoordNew = xCoord };
         yCoordNew = yCoord;
         break;                
 
