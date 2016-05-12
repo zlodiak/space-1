@@ -30,40 +30,54 @@ APP.SpaceView = Backbone.View.extend({
     'keydown': 'move'
   },  
 
-  move: function(e) {  console.log(11)
-    if (e.keyCode == 38) {  
-      var yCoord = this.playerModel.get('yCoord'),
-          speed = this.playerModel.get('speed');
+  move: function(e) { 
+    if(e.keyCode == 32) {
+      console.log('fire') 
+    } else {
+      var newCoords = this.computeCoords(e.keyCode);
 
-      yCoord -= speed;
-      this.playerModel.set({yCoord: yCoord})
+      this.playerModel.set({
+        xCoord: newCoords.xCoord,
+        yCoord: newCoords.yCoord
+      });      
     };
 
-    if (e.keyCode == 40) { 
-      var yCoord = this.playerModel.get('yCoord'),
-          speed = this.playerModel.get('speed');
+    
 
-      yCoord += speed;
-      this.playerModel.set({yCoord: yCoord})
+
+  },
+
+  computeCoords: function(keyCode) { 
+    var yCoord = this.playerModel.get('yCoord'),
+        xCoord = this.playerModel.get('xCoord'),
+        speed = this.playerModel.get('speed');
+
+    switch(keyCode) {
+      case 38:  
+        yCoord -= speed;
+        break;
+
+      case 40: 
+        yCoord += speed;
+        break;
+
+      case 37: 
+        xCoord -= speed;
+        break;
+
+      case 39: 
+        xCoord += speed;
+        break;                
+
+      default:
+        /*console.log('error coords compute');*/
+        break;
     };
 
-    if (e.keyCode == 37) { 
-      var xCoord = this.playerModel.get('xCoord'),
-          speed = this.playerModel.get('speed');
-
-      xCoord -= speed;
-      this.playerModel.set({xCoord: xCoord})
-    };    
-
-    if (e.keyCode == 39) { 
-      var xCoord = this.playerModel.get('xCoord'),
-          speed = this.playerModel.get('speed');
-
-      xCoord += speed;
-      this.playerModel.set({xCoord: xCoord})
-    };       
-
-    if (e.keyCode == 32) { console.log('fire') };
+    return {
+      xCoord: xCoord, 
+      yCoord: yCoord
+    };
   }
  
 
