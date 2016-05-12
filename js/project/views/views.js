@@ -1,14 +1,18 @@
 APP.SpaceView = Backbone.View.extend({  
 
   initialize: function() {   
-    this.informerView = new APP.InformerView();
-    this.infoLineView = new APP.InfolineView();
-    this.fieldView = new APP.FieldView();
+    var self = this;
 
-    this.playerModel = new APP.PlayerModel();
-    this.playerView = new APP.PlayerView({model: this.playerModel});
+    this.playerModel =    new APP.PlayerModel();
+
+    this.infoLineView =   new APP.InfolineView();
+    this.fieldView =      new APP.FieldView();
+    this.informerView =   new APP.InformerView({model: this.playerModel});
+    this.playerShipView = new APP.PlayerShipView({model: this.playerModel});
 
     this.render();
+
+    this.$el.attr('tabindex', 1).focus();
   },    
 
   template: _.template($('#spaceTpl').html()),
@@ -19,10 +23,24 @@ APP.SpaceView = Backbone.View.extend({
     this.$el.find('#infoLineWrap').html(this.infoLineView.render().el);  
     this.$el.find('#fieldWrap').html(this.fieldView.render().el);  
 
-    this.$el.find('#field').append(this.playerView.render().el);  
+    this.$el.find('#field').append(this.playerShipView.render().el);  
 
     return this;
+  }, 
+
+  move: function(e) {  
+    if (e.keyCode == 38) { console.log('up') };
+    if (e.keyCode == 40) { console.log('down') };
+    if (e.keyCode == 37) { console.log('l') };
+    if (e.keyCode == 39) { console.log('r') };
+    if (e.keyCode == 32) { console.log('fire') };
+  },      
+
+  events: {
+    'keydown': 'move'
   }
+
+ 
 
 });
 
@@ -65,7 +83,7 @@ APP.FieldView = Backbone.View.extend({
 });
 
 
-APP.PlayerView = Backbone.View.extend({  
+APP.PlayerShipView = Backbone.View.extend({  
 
   className: 'player',
 

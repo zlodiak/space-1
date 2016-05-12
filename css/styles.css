@@ -29,6 +29,9 @@ body{
 
 
 /****************************************************************************** GLOBAL_layout */
+.space:focus{
+	outline: none;
+}
 
 .main_container{
 	width: 900px;

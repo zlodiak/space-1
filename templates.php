@@ -15,12 +15,7 @@
 <script type="text/template" id="informerTpl">
   <table class="informer_table" id="informerTable">
     <tr>
-      <td>High score: </td>
-      <td></td>
-    </tr>
-
-    <tr>
-      <td>Youre score: </td>
+      <td>Score: </td>
       <td></td>
     </tr>
 
