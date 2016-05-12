@@ -1,8 +1,6 @@
 APP.SpaceView = Backbone.View.extend({  
 
   initialize: function() {   
-    var self = this;
-
     this.playerModel =    new APP.PlayerModel();
 
     this.infoLineView =   new APP.InfolineView();
@@ -10,9 +8,9 @@ APP.SpaceView = Backbone.View.extend({
     this.informerView =   new APP.InformerView({model: this.playerModel});
     this.playerShipView = new APP.PlayerShipView({model: this.playerModel});
 
-    this.render();
+    this.render();    
 
-    this.$el.attr('tabindex', 1).focus();
+    this.$el.attr('tabindex', 1).focus();    
   },    
 
   template: _.template($('#spaceTpl').html()),
@@ -26,20 +24,47 @@ APP.SpaceView = Backbone.View.extend({
     this.$el.find('#field').append(this.playerShipView.render().el);  
 
     return this;
-  }, 
-
-  move: function(e) {  
-    if (e.keyCode == 38) { console.log('up') };
-    if (e.keyCode == 40) { console.log('down') };
-    if (e.keyCode == 37) { console.log('l') };
-    if (e.keyCode == 39) { console.log('r') };
-    if (e.keyCode == 32) { console.log('fire') };
-  },      
+  },
 
   events: {
     'keydown': 'move'
-  }
+  },  
 
+  move: function(e) {  console.log(11)
+    if (e.keyCode == 38) {  
+      var yCoord = this.playerModel.get('yCoord'),
+          speed = this.playerModel.get('speed');
+
+      yCoord -= speed;
+      this.playerModel.set({yCoord: yCoord})
+    };
+
+    if (e.keyCode == 40) { 
+      var yCoord = this.playerModel.get('yCoord'),
+          speed = this.playerModel.get('speed');
+
+      yCoord += speed;
+      this.playerModel.set({yCoord: yCoord})
+    };
+
+    if (e.keyCode == 37) { 
+      var xCoord = this.playerModel.get('xCoord'),
+          speed = this.playerModel.get('speed');
+
+      xCoord -= speed;
+      this.playerModel.set({xCoord: xCoord})
+    };    
+
+    if (e.keyCode == 39) { 
+      var xCoord = this.playerModel.get('xCoord'),
+          speed = this.playerModel.get('speed');
+
+      xCoord += speed;
+      this.playerModel.set({xCoord: xCoord})
+    };       
+
+    if (e.keyCode == 32) { console.log('fire') };
+  }
  
 
 });
@@ -85,14 +110,26 @@ APP.FieldView = Backbone.View.extend({
 
 APP.PlayerShipView = Backbone.View.extend({  
 
+  initialize: function() {       
+    
+    this.listenTo(this.model, 'change', this.render);
+
+
+  },
+
   className: 'player',
 
   id: 'player',
 
   render: function() {    
-    this.$el.html();      
+    this.$el.css({
+      top: this.model.get('yCoord'),
+      left: this.model.get('xCoord')
+    }).html();   
+
     return this;
   }
+
 
 });
 

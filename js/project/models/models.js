@@ -5,8 +5,8 @@ APP.PlayerModel = Backbone.Model.extend({
     energy: 100,
     speed: 10,
     score: 0,
-    xCoord: undefined,
-    yCoord: undefined    
+    xCoord: 10,
+    yCoord: 40    
   }        
 
 });
