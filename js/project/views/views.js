@@ -119,7 +119,12 @@ APP.SpaceView = Backbone.View.extend({
   },
 
   makeMoves: function(self) { 
-    // rocket moves
+    this.playerRocketsMoves(self);
+    this.starsMoves(self);    
+  },
+
+
+  playerRocketsMoves: function(self) {  
     self.playerRocketCollection.each(function(model) { 
       var xCoord = model.get('xCoord'),
           xCoordNew = xCoord + 10,
@@ -132,9 +137,9 @@ APP.SpaceView = Backbone.View.extend({
         model.destroy();
       };        
     });
+  },
 
-    // stars moves 
-    //console.dir(self.starsCollection)
+  starsMoves: function(self) {  
     self.starsCollection.each(function(model) { 
       var speed = model.get('speed'),
           xCoord = model.get('xCoord'),
