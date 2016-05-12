@@ -8,9 +8,14 @@ APP.SpaceView = Backbone.View.extend({
     this.informerView =   new APP.InformerView({model: this.playerModel});
     this.playerShipView = new APP.PlayerShipView({model: this.playerModel});
 
+    this.rocketCollection = new APP.RocketsCollection();
+    //this.rocketCollection.fetch();
+
     this.render();    
 
     this.$el.attr('tabindex', 1).focus();    
+
+    setInterval(this.makeMoves, 1000);
   },    
 
   template: _.template($('#spaceTpl').html()),
@@ -33,6 +38,22 @@ APP.SpaceView = Backbone.View.extend({
   move: function(e) { 
     if(e.keyCode == 32) {
       console.log('fire') 
+
+      var playerRocketModel = new APP.PlayerRocketModel({
+        xCoord: this.playerModel.get('xCoord'),
+        yCoord: this.playerModel.get('yCoord')
+      });
+
+      
+
+      console.log('rc', this.rocketCollection)
+      console.log('rm', playerRocketModel)
+
+      if(this.rocketCollection.add(playerRocketModel)) {
+        playerRocketModel.save();
+      };
+      console.log('rc2', this.rocketCollection)
+
     } else {
       var newCoords = this.computeCoords(e.keyCode);
 
@@ -89,6 +110,19 @@ APP.SpaceView = Backbone.View.extend({
       xCoord: xCoordNew, 
       yCoord: yCoordNew
     };
+  },
+
+  makeMoves: function() { 
+    console.log('move')
+
+    
+
+
+
+
+    _.each(this.rocketCollection, function() {
+
+    }); 
   }
  
 

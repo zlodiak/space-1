@@ -1,6 +1,6 @@
-APP.RocketssCollection = Backbone.Collection.extend({
+APP.RocketsCollection = Backbone.Collection.extend({
 
-  model: APP.BulletModel,
+  model: APP.PlayerRocketModel
 
 });
 

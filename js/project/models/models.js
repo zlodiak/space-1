@@ -22,7 +22,9 @@ APP.EnemyModel = Backbone.Model.extend({
 });
 
 
-APP.RocketModel = Backbone.Model.extend({
+APP.PlayerRocketModel = Backbone.Model.extend({
+
+  localStorage: new Backbone.LocalStorage('rocketsList'),
   
   defaults: {
     xCoord: undefined,
