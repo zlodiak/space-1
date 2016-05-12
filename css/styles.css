@@ -45,6 +45,14 @@ body{
 
 
 
+/****************************************************************************** GLOBAL_blocks: star */
+.star{
+	background: #fff;
+	width: 1px;
+	height: 1px;	
+	position: absolute;
+}
+
 /****************************************************************************** GLOBAL_blocks: player_rocket */
 .player_rocket{
 	background: url('../images/player_rocket.png') left top no-repeat;

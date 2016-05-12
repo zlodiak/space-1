@@ -11,10 +11,13 @@ APP.SpaceView = Backbone.View.extend({
     this.playerShipView = new APP.PlayerShipView({model: this.playerModel});
 
     this.playerRocketCollection = new APP.PlayerRocketsCollection();
+    this.starsCollection = new APP.StarsCollection();
 
     this.render();    
 
-    this.$el.attr('tabindex', 1).focus();    
+    this.$el.attr('tabindex', 1).focus();  
+
+    this.starsInitialize();  
 
     setInterval(function() {
       self.makeMoves(self)
@@ -39,7 +42,7 @@ APP.SpaceView = Backbone.View.extend({
   },  
 
   move: function(e) { 
-    if(e.keyCode == 32) { //console.log('fire') 
+    if(e.keyCode == 32) { 
       var playerShipWidth = this.$el.find('#player').width(),
           playerShipHeight = this.$el.find('#player').height(),
           playerRocketModel = new APP.PlayerRocketModel({
@@ -116,6 +119,7 @@ APP.SpaceView = Backbone.View.extend({
   },
 
   makeMoves: function(self) { 
+    // rocket moves
     self.playerRocketCollection.each(function(model) { 
       var xCoord = model.get('xCoord'),
           xCoordNew = xCoord + 10,
@@ -128,6 +132,44 @@ APP.SpaceView = Backbone.View.extend({
         model.destroy();
       };        
     });
+
+    // stars moves 
+    //console.dir(self.starsCollection)
+    self.starsCollection.each(function(model) { 
+      var xCoord = model.get('xCoord'),
+          xCoordNew = xCoord - 3,
+          fieldWidth = self.$el.find('#field').width();
+
+      if(xCoordNew > 0) {
+        model.set({xCoord: xCoordNew});
+      } else {  
+        //model.destroy();
+      };        
+    });    
+  },
+
+  starsInitialize: function() {     
+    var starsCnt = 100,
+        starModel,
+        xCoordRandom,
+        yCoordRandom,
+        fieldWidth = this.$el.find('#field').width(),
+        fieldHeight = this.$el.find('#field').height();
+
+    for(var i = 0; i < starsCnt; i++) {
+      xCoordRandom = APP.helper.randomIntFromZero(fieldWidth);
+      yCoordRandom = APP.helper.randomIntFromZero(fieldHeight);
+
+      starModel = new APP.StarModel({
+        xCoord: xCoordRandom,
+        yCoord: yCoordRandom
+      });
+
+      if(this.starsCollection.add(starModel)) {
+        starView = new APP.StarView({model: starModel});
+        this.$el.find('#field').append(starView.render().el);
+      };      
+    };
   }
  
 
@@ -224,6 +266,27 @@ APP.PlayerRocketView = Backbone.View.extend({
 });
 
 
+APP.StarView = Backbone.View.extend({  
+
+  initialize: function() {       
+    
+    this.listenTo(this.model, 'change', this.render);
+
+
+  },
+
+  className: 'star',
+
+  render: function() {    
+    this.$el.css({
+      top: this.model.get('yCoord'),
+      left: this.model.get('xCoord')
+    }).html();   
+
+    return this;
+  }
+
+});
 
 
 

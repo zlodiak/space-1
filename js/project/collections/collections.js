@@ -10,3 +10,9 @@ APP.EnemiesCollection = Backbone.Collection.extend({
 
 });
 
+
+APP.StarsCollection = Backbone.Collection.extend({
+
+  model: APP.StarModel,
+
+});

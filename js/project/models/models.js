@@ -45,3 +45,14 @@ APP.InformerModel = Backbone.Model.extend({
 
 });
 
+
+APP.StarModel = Backbone.Model.extend({
+  
+  defaults: {
+    xCoord: undefined,
+    yCoord: undefined
+  }        
+
+});
+
+
