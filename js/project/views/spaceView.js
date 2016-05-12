@@ -17,10 +17,10 @@ APP.SpaceView = Backbone.View.extend({
 
     this.$el.attr('tabindex', 1).focus();  
 
-    this.starsInitialize();  
+    this._starsInitialize();  
 
     setInterval(function() {
-      self.makeMoves(self)
+      self._makeMoves(self)
     }, 100);
   },    
 
@@ -62,7 +62,7 @@ APP.SpaceView = Backbone.View.extend({
         this.playerModel.set({rockets: playerRocketsCnt});
       };
     } else {
-      var newCoords = this.computeCoords(e.keyCode);
+      var newCoords = this._computeCoords(e.keyCode);
 
       this.playerModel.set({
         xCoord: newCoords.xCoord,
@@ -84,7 +84,7 @@ APP.SpaceView = Backbone.View.extend({
     return result;
   },
 
-  computeCoords: function(keyCode) { 
+  _computeCoords: function(keyCode) { 
     var yCoordNew,
         xCoordNew,
         yCoord =  this.playerModel.get('yCoord'),
@@ -135,12 +135,12 @@ APP.SpaceView = Backbone.View.extend({
     };
   },
 
-  makeMoves: function(self) { 
-    this.playerRocketsMoves(self);
-    this.starsMoves(self);    
+  _makeMoves: function(self) { 
+    this._playerRocketsMoves(self);
+    this._starsMoves(self);    
   },
 
-  playerRocketsMoves: function(self) {  
+  _playerRocketsMoves: function(self) {  
     self.playerRocketCollection.each(function(model) { 
       var xCoord = model.get('xCoord'),
           xCoordNew = xCoord + 10,
@@ -155,7 +155,7 @@ APP.SpaceView = Backbone.View.extend({
     });
   },
 
-  starsMoves: function(self) {  
+  _starsMoves: function(self) {  
     self.starsCollection.each(function(model) { 
       var speed = model.get('speed'),
           xCoord = model.get('xCoord'),
@@ -174,7 +174,7 @@ APP.SpaceView = Backbone.View.extend({
     });    
   },
 
-  starsInitialize: function() {     
+  _starsInitialize: function() {     
     var starsCnt = 100,
         starSpeedMax = 3,
         starSpeedMin = 0,
