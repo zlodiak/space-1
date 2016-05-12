@@ -42,15 +42,8 @@ APP.SpaceView = Backbone.View.extend({
   },  
 
   move: function(e) { 
-    if(e.keyCode == 32) { 
-      var playerRocketsCnt = this.playerModel.get('rockets');
-
-      playerRocketsCnt--;
-      if(playerRocketsCnt < 0) { 
-        return; 
-      } else {
-        this.playerModel.set({rockets: playerRocketsCnt})
-      };
+    if(e.keyCode == 32) { console.log(this._checkPlayerRocketsCnt())
+      if(!this._checkPlayerRocketsCnt()) { return };
 
       var playerShipWidth = this.$el.find('#player').width(),
           playerShipHeight = this.$el.find('#player').height(),
@@ -60,8 +53,13 @@ APP.SpaceView = Backbone.View.extend({
           });
 
       if(this.playerRocketCollection.add(playerRocketModel)) {
-        var playerRocket = new APP.PlayerRocketView({model: playerRocketModel});
+        var playerRocket = new APP.PlayerRocketView({model: playerRocketModel}),
+            playerRocketsCnt = this.playerModel.get('rockets');
+
         this.$el.find('#field').append(playerRocket.render().el);
+
+        playerRocketsCnt--;
+        this.playerModel.set({rockets: playerRocketsCnt});
       };
     } else {
       var newCoords = this.computeCoords(e.keyCode);
@@ -71,6 +69,19 @@ APP.SpaceView = Backbone.View.extend({
         yCoord: newCoords.yCoord
       });      
     };
+  },
+
+  _checkPlayerRocketsCnt: function() { 
+    var playerRocketsCnt = this.playerModel.get('rockets'),
+        result;
+    
+    if(playerRocketsCnt <= 0) { 
+      result = false;
+    } else {      
+      result = true;
+    };
+
+    return result;
   },
 
   computeCoords: function(keyCode) { 
