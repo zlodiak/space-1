@@ -8,7 +8,7 @@ APP.SpaceView = Backbone.View.extend({
     this.informerView =   new APP.InformerView({model: this.playerModel});
     this.playerShipView = new APP.PlayerShipView({model: this.playerModel});
 
-    this.rocketCollection = new APP.RocketsCollection();
+    this.playerRocketCollection = new APP.PlayerRocketsCollection();
 
     this.render();    
 
@@ -42,12 +42,12 @@ APP.SpaceView = Backbone.View.extend({
             yCoord: this.playerModel.get('yCoord')
           });
 
-      if(this.rocketCollection.add(playerRocketModel)) {
+      if(this.playerRocketCollection.add(playerRocketModel)) {
         var playerRocket = new APP.PlayerRocketView({model: playerRocketModel});
         this.$el.find('#field').append(playerRocket.render().el);
       };
 
-      console.log('rc2', this.rocketCollection)
+      console.log('rc2', this.playerRocketCollection)
 
     } else {
       var newCoords = this.computeCoords(e.keyCode);
@@ -108,14 +108,14 @@ APP.SpaceView = Backbone.View.extend({
   },
 
   makeMoves: function() { 
-    console.log('move')
+    console.log('makeMoves', this.playerRocketCollection)
 
     
 
 
 
 
-    _.each(this.rocketCollection, function() {
+    _.each(this.playerRocketCollection, function() {
 
     }); 
   }
