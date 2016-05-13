@@ -26,9 +26,7 @@ APP.SpaceView = Backbone.View.extend({
 
     };    
 
-    var infolineModel =  new APP.InfolineModel({message: 'Game started'});
-    this.infolinesCollection.add(infolineModel);
-    console.log(this.infolinesCollection);
+    this.infoLineView.addMessage('sstart');
   },    
 
   template: _.template($('#spaceTpl').html()),
@@ -49,7 +47,7 @@ APP.SpaceView = Backbone.View.extend({
   },  
 
   move: function(e) { 
-    if(e.keyCode == 32) { console.log(this._checkPlayerRocketsCnt())
+    if(e.keyCode == 32) { 
       if(!this._checkPlayerRocketsCnt()) { return };
 
       var playerShipWidth = this.$el.find('#player').width(),
@@ -67,6 +65,8 @@ APP.SpaceView = Backbone.View.extend({
 
         playerRocketsCnt--;
         this.playerModel.set({rockets: playerRocketsCnt});
+
+        this.infoLineView.addMessage('fire');
       };
     } else {
       var newCoords = this._computeCoords(e.keyCode);

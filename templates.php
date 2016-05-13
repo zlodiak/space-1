@@ -37,10 +37,8 @@
 </script>
 
 
-<script type="text/template" id="infoLineTpl">
-  <div class="info_line" id="infoLine">running line info</div>
-</script>
-
 <script type="text/template" id="fieldTpl">
   <div class="field" id="field"></div>
 </script>
+
+

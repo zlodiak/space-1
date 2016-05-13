@@ -29,26 +29,6 @@ APP.InformerView = Backbone.View.extend({
 });
 
 
-APP.InfolineView = Backbone.View.extend({  
-
-  initialize: function() {   
-    this.listenTo(this.collection, 'add', this.displayMessage); 
-  },  
-
-  template: _.template($('#infoLineTpl').html()),
-
-  render: function() {    
-    this.$el.html(this.template());      
-    return this;
-  },
-
-  displayMessage: function(message) {   
-    console.log('sfsdf')
-  }
-
-});
-
-
 APP.FieldView = Backbone.View.extend({  
 
   className: 'field',
@@ -57,6 +37,64 @@ APP.FieldView = Backbone.View.extend({
 
   render: function() {    
     this.$el.html();      
+    return this;
+  }
+
+});
+
+
+APP.InfolineView = Backbone.View.extend({  
+
+  initialize: function() {   
+    this.idInfoMessage = 0;
+    this.listenTo(this.collection, 'add', this._displayMessage); 
+  },  
+
+  className: 'info_line',
+
+  id: 'infoLine',
+
+  render: function() {    
+    this.$el.html();      
+    return this;
+  },
+
+  addMessage: function(message) {   console.log('addMessage')
+    this.idInfoMessage++;
+
+    var infoMessageModel = new APP.InfoMessageModel({
+      idInfoMessage: this.idInfoMessage,
+      message: message
+    });
+
+    this.collection.add(infoMessageModel);
+  },
+
+  _displayMessage: function() {   
+    var messageModel = this.collection.findWhere({idInfoMessage: this.idInfoMessage}),
+        messageText = messageModel.get('message'),
+        infomessageView = new APP.InfomessageView(messageText, this.idInfoMessage),
+        messageElem = infomessageView.render().el;
+
+    this.$el.append(messageElem);
+  }
+
+});
+
+
+APP.InfomessageView = Backbone.View.extend({  
+
+  initialize: function(messageText, idInfoMessage) {   
+    this.messageText = messageText;
+    this.idInfoMessage = idInfoMessage;
+  },    
+
+  tagName: 'span',
+
+  className: 'info_message',
+
+  render: function() {    
+    this.$el.html(this.messageText).attr('data-id-info-message', this.idInfoMessage);      
     return this;
   }
 

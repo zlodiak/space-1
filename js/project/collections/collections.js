@@ -20,6 +20,6 @@ APP.StarsCollection = Backbone.Collection.extend({
 
 APP.InfolinesCollection = Backbone.Collection.extend({
 
-  model: APP.InfolineModel,
+  model: APP.InfoMessageModel,
 
 });
