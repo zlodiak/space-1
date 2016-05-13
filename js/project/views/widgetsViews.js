@@ -36,6 +36,13 @@ APP.InfolineView = Backbone.View.extend({
   render: function() {    
     this.$el.html(this.template());      
     return this;
+  },
+
+  addMessage: function(message) {   
+    var messages = this.model.get('messages');
+
+    messages.push(message);
+    this.model.set({messages: messages});
   }
 
 });

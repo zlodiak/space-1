@@ -4,8 +4,9 @@ APP.SpaceView = Backbone.View.extend({
     var self = this;
 
     this.playerModel =    new APP.PlayerModel();
+    this.infolineModel =  new APP.InfolineModel();
 
-    this.infoLineView =   new APP.InfolineView();
+    this.infoLineView =   new APP.InfolineView({model: this.infolineModel});
     this.fieldView =      new APP.FieldView();
     this.informerView =   new APP.InformerView({model: this.playerModel});
     this.playerShipView = new APP.PlayerShipView({model: this.playerModel});
@@ -13,15 +14,17 @@ APP.SpaceView = Backbone.View.extend({
     this.playerRocketCollection = new APP.PlayerRocketsCollection();
     this.starsCollection = new APP.StarsCollection();
 
-    this.render();    
+    if(this.render()) {
+      this.$el.attr('tabindex', 1).focus();  
 
-    this.$el.attr('tabindex', 1).focus();  
+      this._starsInitialize();  
 
-    this._starsInitialize();  
+      setInterval(function() {
+        self._makeMoves(self)
+      }, 100);      
+    };    
 
-    setInterval(function() {
-      self._makeMoves(self)
-    }, 100);
+
   },    
 
   template: _.template($('#spaceTpl').html()),
