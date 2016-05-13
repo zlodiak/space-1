@@ -31,6 +31,10 @@ APP.InformerView = Backbone.View.extend({
 
 APP.InfolineView = Backbone.View.extend({  
 
+  initialize: function() {   
+    this.listenTo(this.collection, 'add', this.displayMessage); 
+  },  
+
   template: _.template($('#infoLineTpl').html()),
 
   render: function() {    
@@ -38,11 +42,8 @@ APP.InfolineView = Backbone.View.extend({
     return this;
   },
 
-  addMessage: function(message) {   
-    var messages = this.model.get('messages');
-
-    messages.push(message);
-    this.model.set({messages: messages});
+  displayMessage: function(message) {   
+    console.log('sfsdf')
   }
 
 });

@@ -60,7 +60,7 @@ APP.StarModel = Backbone.Model.extend({
 APP.InfolineModel = Backbone.Model.extend({
   
   defaults: {
-    messages: []
+    message: undefined
   }        
 
 });

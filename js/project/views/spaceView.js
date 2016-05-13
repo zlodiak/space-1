@@ -4,15 +4,15 @@ APP.SpaceView = Backbone.View.extend({
     var self = this;
 
     this.playerModel =    new APP.PlayerModel();
-    this.infolineModel =  new APP.InfolineModel();
 
-    this.infoLineView =   new APP.InfolineView({model: this.infolineModel});
+    this.playerRocketCollection = new APP.PlayerRocketsCollection();
+    this.infolinesCollection = new APP.InfolinesCollection();
+    this.starsCollection = new APP.StarsCollection();    
+
+    this.infoLineView =   new APP.InfolineView({collection: this.infolinesCollection});
     this.fieldView =      new APP.FieldView();
     this.informerView =   new APP.InformerView({model: this.playerModel});
     this.playerShipView = new APP.PlayerShipView({model: this.playerModel});
-
-    this.playerRocketCollection = new APP.PlayerRocketsCollection();
-    this.starsCollection = new APP.StarsCollection();
 
     if(this.render()) {
       this.$el.attr('tabindex', 1).focus();  
@@ -21,10 +21,14 @@ APP.SpaceView = Backbone.View.extend({
 
       setInterval(function() {
         self._makeMoves(self)
-      }, 100);      
+      }, 100);   
+
+
     };    
 
-
+    var infolineModel =  new APP.InfolineModel({message: 'Game started'});
+    this.infolinesCollection.add(infolineModel);
+    console.log(this.infolinesCollection);
   },    
 
   template: _.template($('#spaceTpl').html()),
