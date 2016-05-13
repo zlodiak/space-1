@@ -71,12 +71,18 @@ APP.InfolineView = Backbone.View.extend({
   },
 
   _displayMessage: function() {   
+    var self= this;
+
     var messageModel = this.collection.findWhere({idInfoMessage: this.idInfoMessage}),
         messageText = messageModel.get('message'),
-        infomessageView = new APP.InfomessageView(messageText, this.idInfoMessage),
-        messageElem = infomessageView.render().el;
+        infoMessageView = new APP.InfomessageView(messageModel, messageText, this.idInfoMessage),
+        messageElem = infoMessageView.render().el;
 
     this.$el.append(messageElem);
+
+    setTimeout(function() {
+      messageModel.destroy();
+    }, 3000);
   }
 
 });
@@ -84,14 +90,21 @@ APP.InfolineView = Backbone.View.extend({
 
 APP.InfomessageView = Backbone.View.extend({  
 
-  initialize: function(messageText, idInfoMessage) {   
+  initialize: function(model, messageText, idInfoMessage) {  
+    this.model = model;
     this.messageText = messageText;
     this.idInfoMessage = idInfoMessage;
+
+    this.listenTo(this.model, 'remove', this.removeElem); 
   },    
 
   tagName: 'span',
 
   className: 'info_message',
+
+  removeElem: function() {  console.log('rr') 
+    this.$el.remove();
+  },
 
   render: function() {    
     this.$el.html(this.messageText).attr('data-id-info-message', this.idInfoMessage);      
