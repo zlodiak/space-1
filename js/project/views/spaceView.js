@@ -8,11 +8,11 @@ APP.SpaceView = Backbone.View.extend({
 
     this.playerModel =    new APP.PlayerModel();
 
-    APP.playerRocketCollection = new APP.PlayerRocketsCollection();
-    APP.starsCollection = new APP.StarsCollection();    
-    this.infolinesCollection = new APP.InfolinesCollection();
+    APP.playerRocketCollection =  new APP.PlayerRocketsCollection();
+    APP.starsCollection =         new APP.StarsCollection();    
+    this.infolinesCollection =    new APP.InfolinesCollection();
 
-    APP.infoLineView =   new APP.InfolineView({collection: this.infolinesCollection});
+    APP.infoLineView =    new APP.InfolineView({collection: this.infolinesCollection});
     this.fieldView =      new APP.FieldView();
     this.informerView =   new APP.InformerView({model: this.playerModel});
     this.playerShipView = new APP.PlayerShipView({model: this.playerModel});
