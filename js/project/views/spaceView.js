@@ -3,6 +3,8 @@ APP.SpaceView = Backbone.View.extend({
   initialize: function() {   
     var self = this;
 
+    APP.TIME_UNIT = 100;
+
     this.playerModel =    new APP.PlayerModel();
 
     APP.playerRocketCollection = new APP.PlayerRocketsCollection();
@@ -19,7 +21,7 @@ APP.SpaceView = Backbone.View.extend({
 
       setInterval(function() {
         self._makeMoves()
-      }, 100);   
+      }, APP.TIME_UNIT);   
     };    
 
     APP.infoLineView.addMessage('sstart');
