@@ -6,30 +6,19 @@ APP.SpaceView = Backbone.View.extend({
     APP.TIME_UNIT_MS = 100;
     APP.STARS_CNT = 100;
 
-    APP.playerModel =    new APP.PlayerModel();
-
-    APP.playerRocketCollection =  new APP.PlayerRocketsCollection();
-    APP.starsCollection =         new APP.StarsCollection();    
-    this.infolinesCollection =    new APP.InfolinesCollection();
-
-    APP.infoLineView =    new APP.InfolineView({collection: this.infolinesCollection});
-    APP.fieldView =      new APP.FieldView();
-    this.informerView =   new APP.InformerView({model: APP.playerModel});
-    APP.playerShipView = new APP.PlayerShipView({model: APP.playerModel});
+    this._modelsInitialize();
+    this._collectionsInitialize();
+    this._viewsInitialize();
 
     if(this.render()) {
-      this._starsInitialize();  
-
-      setInterval(function() {
-        self._makeMoves()
-      }, APP.TIME_UNIT_MS);   
-    };    
-
-    APP.infoLineView.addMessage('Полёт нормальный');
+      this._starsInitialize();    
+    };        
 
     $('body').on('click', function() {
       self._setFocus('player');
     });
+
+    APP.infoLineView.addMessage('Полёт нормальный');
   },    
 
   template: _.template($('#spaceTpl').html()),
@@ -50,17 +39,29 @@ APP.SpaceView = Backbone.View.extend({
     this.$el.find('#' + elemId).attr('tabindex', 1).focus(); 
   },
 
-  _makeMoves: function() { 
-    //this._playerRocketsMoves(this);   
-  },
-
   _starsInitialize: function() {   
     for(var i = 0; i < APP.STARS_CNT; i++) {
-      new APP.StarView(APP.fieldView.id);
+      new APP.StarView();
     };
-  }
- 
+  },
 
+  _modelsInitialize: function() { 
+    APP.playerModel = new APP.PlayerModel();
+  },
+
+  _collectionsInitialize: function() { 
+    APP.playerRocketCollection =  new APP.PlayerRocketsCollection();
+    APP.starsCollection =         new APP.StarsCollection();    
+    this.infolinesCollection =    new APP.InfolinesCollection();
+  },
+
+  _viewsInitialize: function() { 
+    APP.infoLineView =   new APP.InfolineView({collection: this.infolinesCollection});
+    APP.fieldView =      new APP.FieldView();
+    this.informerView =  new APP.InformerView({model: APP.playerModel});
+    APP.playerShipView = new APP.PlayerShipView({model: APP.playerModel});
+  }    
+ 
 });
 
 
