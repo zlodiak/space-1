@@ -15,22 +15,22 @@
 <script type="text/template" id="informerTpl">
   <table class="informer_table" id="informerTable">
     <tr>
-      <td>Score: </td>
+      <td>Счёт: </td>
       <td><%= score %></td>
     </tr>
 
     <tr>
-      <td>Rockets: </td>
+      <td>Ракеты: </td>
       <td><%= rockets %></td>
     </tr>   
 
     <tr>
-      <td>Energy: </td>
+      <td>Жизнь: </td>
       <td><%= energy %></td>
     </tr>   
 
     <tr>
-      <td>Speed: </td>
+      <td>Скорость: </td>
       <td><%= speed %></td>
     </tr>             
   </table>

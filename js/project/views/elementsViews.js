@@ -19,10 +19,10 @@ APP.PlayerShipView = Backbone.View.extend({
   },
 
   events: {
-    'keydown': 'move'
+    'keydown': 'action'
   },  
 
-  move: function(e) { 
+  action: function(e) { 
     if(e.keyCode == 32) { 
       if(!this._checkPlayerRocketsCnt()) { return };
 
@@ -42,7 +42,7 @@ APP.PlayerShipView = Backbone.View.extend({
         playerRocketsCnt--;
         this.model.set({rockets: playerRocketsCnt});
 
-        APP.infoLineView.addMessage('fire');
+        APP.infoLineView.addMessage('Берегите патроны!');
       };
     } else {
       var newCoords = this._computeCoords(e.keyCode);

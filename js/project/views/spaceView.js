@@ -9,8 +9,8 @@ APP.SpaceView = Backbone.View.extend({
     this.playerModel =    new APP.PlayerModel();
 
     APP.playerRocketCollection = new APP.PlayerRocketsCollection();
-    this.infolinesCollection = new APP.InfolinesCollection();
     APP.starsCollection = new APP.StarsCollection();    
+    this.infolinesCollection = new APP.InfolinesCollection();
 
     APP.infoLineView =   new APP.InfolineView({collection: this.infolinesCollection});
     this.fieldView =      new APP.FieldView();
@@ -25,7 +25,7 @@ APP.SpaceView = Backbone.View.extend({
       }, APP.TIME_UNIT_MS);   
     };    
 
-    APP.infoLineView.addMessage('sstart');
+    APP.infoLineView.addMessage('Полёт нормальный');
   },    
 
   template: _.template($('#spaceTpl').html()),
@@ -43,8 +43,7 @@ APP.SpaceView = Backbone.View.extend({
   },
 
   _makeMoves: function() { 
-    this._playerRocketsMoves(this);
-    //this._starsMoves(this);    
+    this._playerRocketsMoves(this);   
   },
 
   _playerRocketsMoves: function(self) {  
@@ -62,25 +61,6 @@ APP.SpaceView = Backbone.View.extend({
         model.destroy();
       };        
     });
-  },
-
-  _starsMoves: function(self) {  
-    APP.starsCollection.each(function(model) { 
-      var speed = model.get('speed'),
-          xCoord = model.get('xCoord'),
-          xCoordNew = xCoord - speed,
-          fieldWidth = self.$el.find('#field').width(),
-          fieldHeight = self.$el.find('#field').height();
-
-      if(xCoordNew > 0) {
-        model.set({xCoord: xCoordNew});
-      } else {  
-        model.set({
-          xCoord: fieldWidth,
-          yCoord: APP.helper.randomIntFromZero(fieldHeight),
-        });
-      };        
-    });    
   },
 
   _starsInitialize: function() {   

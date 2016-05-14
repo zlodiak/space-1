@@ -64,7 +64,7 @@ APP.InfolineView = Backbone.View.extend({
 
     var infoMessageModel = new APP.InfoMessageModel({
       idInfoMessage: this.idInfoMessage,
-      message: message + this.idInfoMessage
+      message: message
     });
 
     this.collection.add(infoMessageModel);
