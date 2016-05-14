@@ -26,6 +26,10 @@ APP.SpaceView = Backbone.View.extend({
     };    
 
     APP.infoLineView.addMessage('Полёт нормальный');
+
+    $('body').on('click', function() {
+      self._setFocus('player');
+    });
   },    
 
   template: _.template($('#spaceTpl').html()),
@@ -37,9 +41,13 @@ APP.SpaceView = Backbone.View.extend({
     this.$el.find('#fieldWrap').html(this.fieldView.render().el);  
 
     this.$el.find('#field').append(this.playerShipView.render().el);  
-    this.$el.find('#player').attr('tabindex', 1).focus();  
+    this._setFocus('player');
 
     return this;
+  },
+
+  _setFocus: function(elemId) { 
+    this.$el.find('#' + elemId).attr('tabindex', 1).focus(); 
   },
 
   _makeMoves: function() { 
