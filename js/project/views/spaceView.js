@@ -51,24 +51,7 @@ APP.SpaceView = Backbone.View.extend({
   },
 
   _makeMoves: function() { 
-    this._playerRocketsMoves(this);   
-  },
-
-  _playerRocketsMoves: function(self) {  
-    APP.playerRocketCollection.each(function(model) {     
-      if(!model) { return };
-
-      var xCoord = model.get('xCoord'),
-          xCoordNew = xCoord + 10,
-          fieldWidth = self.$el.find('#field').width(),
-          playerRocketWidth = self.$el.find('#playerRocket').first().width();
-
-      if(xCoordNew < (fieldWidth - playerRocketWidth)) {
-        model.set({xCoord: xCoordNew});
-      } else {  
-        model.destroy();
-      };        
-    });
+    //this._playerRocketsMoves(this);   
   },
 
   _starsInitialize: function() {   

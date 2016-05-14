@@ -25,7 +25,7 @@ APP.PlayerShipView = Backbone.View.extend({
   action: function(e) { 
     if(e.keyCode == 32) { 
       if(!this._checkPlayerRocketsCnt()) { 
-        APP.infoLineView.addMessage('Патроны кончились :(');
+        APP.infoLineView.addMessage('Ракеты кончились :(');
         return; 
       };
 
@@ -110,6 +110,8 @@ APP.PlayerShipView = Backbone.View.extend({
 APP.PlayerRocketView = Backbone.View.extend({  
 
   initialize: function() {  
+    var self = this;
+
     var playerShipWidth = $('#' + APP.playerShipView.id).width(),
         playerShipHeight = $('#' + APP.playerShipView.id).height();//,
         
@@ -127,7 +129,11 @@ APP.PlayerRocketView = Backbone.View.extend({
     playerRocketsCnt--;
     APP.playerModel.set({rockets: playerRocketsCnt});    
 
-    APP.infoLineView.addMessage('Берегите патроны!');
+    APP.infoLineView.addMessage('Берегите ракеты!');
+
+    setInterval(function() {
+      self._move()
+    }, APP.TIME_UNIT_MS);       
 
     this.listenTo(this.model, 'change', this.render);
     this.listenTo(this.model, 'destroy', this.destroyElem);
@@ -148,7 +154,20 @@ APP.PlayerRocketView = Backbone.View.extend({
 
   destroyElem: function() {   
     this.$el.remove();
-  }
+  },
+
+  _move: function() { 
+    var xCoord = this.model.get('xCoord'),
+        xCoordNew = xCoord + 10,
+        fieldWidth = $('#' + APP.fieldView.id).width(),
+        playerRocketWidth = this.$el.width();
+
+    if(xCoordNew < (fieldWidth - playerRocketWidth)) {  
+      this.model.set({xCoord: xCoordNew});
+    } else { 
+      this.model.destroy();
+    };         
+  }  
 
 });
 
