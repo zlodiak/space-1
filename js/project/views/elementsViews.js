@@ -26,6 +26,8 @@ APP.PlayerShipView = Backbone.View.extend({
     if(e.keyCode == 32) { 
       if(!this._checkPlayerRocketsCnt()) { return };
 
+      //new APP.PlayerRocketView();
+
       var playerShipWidth = this.$el.width(),
           playerShipHeight = this.$el.height(),
           playerRocketModel = new APP.PlayerRocketModel({

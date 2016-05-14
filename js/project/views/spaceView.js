@@ -13,7 +13,7 @@ APP.SpaceView = Backbone.View.extend({
     this.infolinesCollection =    new APP.InfolinesCollection();
 
     APP.infoLineView =    new APP.InfolineView({collection: this.infolinesCollection});
-    this.fieldView =      new APP.FieldView();
+    APP.fieldView =      new APP.FieldView();
     this.informerView =   new APP.InformerView({model: this.playerModel});
     this.playerShipView = new APP.PlayerShipView({model: this.playerModel});
 
@@ -38,7 +38,7 @@ APP.SpaceView = Backbone.View.extend({
     this.$el.html(this.template());  
     this.$el.find('#informerWrap').html(this.informerView.el);  
     this.$el.find('#infoLineWrap').html(APP.infoLineView.render().el);  
-    this.$el.find('#fieldWrap').html(this.fieldView.render().el);  
+    this.$el.find('#fieldWrap').html(APP.fieldView.render().el);  
 
     this.$el.find('#field').append(this.playerShipView.render().el);  
     this._setFocus('player');
@@ -73,7 +73,7 @@ APP.SpaceView = Backbone.View.extend({
 
   _starsInitialize: function() {   
     for(var i = 0; i < APP.STARS_CNT; i++) {
-      new APP.StarView(this.fieldView.id);
+      new APP.StarView(APP.fieldView.id);
     };
   }
  
