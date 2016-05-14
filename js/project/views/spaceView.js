@@ -3,13 +3,14 @@ APP.SpaceView = Backbone.View.extend({
   initialize: function() {   
     var self = this;
 
-    APP.TIME_UNIT = 100;
+    APP.TIME_UNIT_MS = 100;
+    APP.STARS_CNT = 100;
 
     this.playerModel =    new APP.PlayerModel();
 
     APP.playerRocketCollection = new APP.PlayerRocketsCollection();
     this.infolinesCollection = new APP.InfolinesCollection();
-    this.starsCollection = new APP.StarsCollection();    
+    APP.starsCollection = new APP.StarsCollection();    
 
     APP.infoLineView =   new APP.InfolineView({collection: this.infolinesCollection});
     this.fieldView =      new APP.FieldView();
@@ -21,7 +22,7 @@ APP.SpaceView = Backbone.View.extend({
 
       setInterval(function() {
         self._makeMoves()
-      }, APP.TIME_UNIT);   
+      }, APP.TIME_UNIT_MS);   
     };    
 
     APP.infoLineView.addMessage('sstart');
@@ -43,7 +44,7 @@ APP.SpaceView = Backbone.View.extend({
 
   _makeMoves: function() { 
     this._playerRocketsMoves(this);
-    this._starsMoves(this);    
+    //this._starsMoves(this);    
   },
 
   _playerRocketsMoves: function(self) {  
@@ -64,7 +65,7 @@ APP.SpaceView = Backbone.View.extend({
   },
 
   _starsMoves: function(self) {  
-    self.starsCollection.each(function(model) { 
+    APP.starsCollection.each(function(model) { 
       var speed = model.get('speed'),
           xCoord = model.get('xCoord'),
           xCoordNew = xCoord - speed,
@@ -82,32 +83,9 @@ APP.SpaceView = Backbone.View.extend({
     });    
   },
 
-  _starsInitialize: function() {     
-    var starsCnt = 100,
-        starSpeedMax = 3,
-        starSpeedMin = 0,
-        starModel,
-        xCoordRandom,
-        yCoordRandom,
-        speedRandom,
-        fieldWidth = this.$el.find('#field').width(),
-        fieldHeight = this.$el.find('#field').height();
-
-    for(var i = 0; i < starsCnt; i++) {
-      xCoordRandom = APP.helper.randomIntFromZero(fieldWidth);
-      yCoordRandom = APP.helper.randomIntFromZero(fieldHeight);
-      speedRandom = APP.helper.randomIntFromInterval(starSpeedMin, starSpeedMax);
-
-      starModel = new APP.StarModel({
-        xCoord: xCoordRandom,
-        yCoord: yCoordRandom,
-        speed: speedRandom
-      });
-
-      if(this.starsCollection.add(starModel)) {
-        starView = new APP.StarView({model: starModel});
-        this.$el.find('#field').append(starView.render().el);
-      };      
+  _starsInitialize: function() {   
+    for(var i = 0; i < APP.STARS_CNT; i++) {
+      new APP.StarView(this.fieldView.id);
     };
   }
  
