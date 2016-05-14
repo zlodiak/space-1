@@ -5,26 +5,24 @@ APP.SpaceView = Backbone.View.extend({
 
     this.playerModel =    new APP.PlayerModel();
 
-    this.playerRocketCollection = new APP.PlayerRocketsCollection();
+    APP.playerRocketCollection = new APP.PlayerRocketsCollection();
     this.infolinesCollection = new APP.InfolinesCollection();
     this.starsCollection = new APP.StarsCollection();    
 
-    this.infoLineView =   new APP.InfolineView({collection: this.infolinesCollection});
+    APP.infoLineView =   new APP.InfolineView({collection: this.infolinesCollection});
     this.fieldView =      new APP.FieldView();
     this.informerView =   new APP.InformerView({model: this.playerModel});
     this.playerShipView = new APP.PlayerShipView({model: this.playerModel});
 
     if(this.render()) {
-      
-
       this._starsInitialize();  
 
       setInterval(function() {
-        self._makeMoves(self)
+        self._makeMoves()
       }, 100);   
     };    
 
-    this.infoLineView.addMessage('sstart');
+    APP.infoLineView.addMessage('sstart');
   },    
 
   template: _.template($('#spaceTpl').html()),
@@ -32,7 +30,7 @@ APP.SpaceView = Backbone.View.extend({
   render: function() {    
     this.$el.html(this.template());  
     this.$el.find('#informerWrap').html(this.informerView.el);  
-    this.$el.find('#infoLineWrap').html(this.infoLineView.render().el);  
+    this.$el.find('#infoLineWrap').html(APP.infoLineView.render().el);  
     this.$el.find('#fieldWrap').html(this.fieldView.render().el);  
 
     this.$el.find('#field').append(this.playerShipView.render().el);  
@@ -41,13 +39,15 @@ APP.SpaceView = Backbone.View.extend({
     return this;
   },
 
-  _makeMoves: function(self) { 
-    this._playerRocketsMoves(self);
-    this._starsMoves(self);    
+  _makeMoves: function() { 
+    this._playerRocketsMoves(this);
+    this._starsMoves(this);    
   },
 
   _playerRocketsMoves: function(self) {  
-    self.playerRocketCollection.each(function(model) { 
+    APP.playerRocketCollection.each(function(model) {     
+      if(!model) { return };
+
       var xCoord = model.get('xCoord'),
           xCoordNew = xCoord + 10,
           fieldWidth = self.$el.find('#field').width(),

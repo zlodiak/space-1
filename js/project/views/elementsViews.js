@@ -22,32 +22,32 @@ APP.PlayerShipView = Backbone.View.extend({
     'keydown': 'move'
   },  
 
-  move: function(e) { console.log('mmm')
+  move: function(e) { 
     if(e.keyCode == 32) { 
       if(!this._checkPlayerRocketsCnt()) { return };
 
-      var playerShipWidth = this.$el.find('#player').width(),
-          playerShipHeight = this.$el.find('#player').height(),
+      var playerShipWidth = this.$el.width(),
+          playerShipHeight = this.$el.height(),
           playerRocketModel = new APP.PlayerRocketModel({
-            xCoord: this.playerModel.get('xCoord') + playerShipWidth - 5,
-            yCoord: this.playerModel.get('yCoord') + playerShipHeight -7
+            xCoord: this.model.get('xCoord') + playerShipWidth - 5,
+            yCoord: this.model.get('yCoord') + playerShipHeight -7
           });
 
-      if(this.playerRocketCollection.add(playerRocketModel)) {
+      if(APP.playerRocketCollection.add(playerRocketModel)) {
         var playerRocket = new APP.PlayerRocketView({model: playerRocketModel}),
-            playerRocketsCnt = this.playerModel.get('rockets');
+            playerRocketsCnt = this.model.get('rockets');
 
-        this.$el.find('#field').append(playerRocket.render().el);
+        this.$el.parent().append(playerRocket.render().el);
 
         playerRocketsCnt--;
-        this.playerModel.set({rockets: playerRocketsCnt});
+        this.model.set({rockets: playerRocketsCnt});
 
-        this.infoLineView.addMessage('fire');
+        APP.infoLineView.addMessage('fire');
       };
     } else {
       var newCoords = this._computeCoords(e.keyCode);
 
-      this.playerModel.set({
+      this.model.set({
         xCoord: newCoords.xCoord,
         yCoord: newCoords.yCoord
       });      
@@ -55,7 +55,7 @@ APP.PlayerShipView = Backbone.View.extend({
   },
 
   _checkPlayerRocketsCnt: function() { 
-    var playerRocketsCnt = this.playerModel.get('rockets'),
+    var playerRocketsCnt = this.model.get('rockets'),
         result;
     
     if(playerRocketsCnt <= 0) { 
@@ -70,17 +70,17 @@ APP.PlayerShipView = Backbone.View.extend({
   _computeCoords: function(keyCode) { 
     var yCoordNew,
         xCoordNew,
-        yCoord =  this.playerModel.get('yCoord'),
-        xCoord =  this.playerModel.get('xCoord'),
-        speed =   this.playerModel.get('speed');
+        yCoord =  this.model.get('yCoord'),
+        xCoord =  this.model.get('xCoord'),
+        speed =   this.model.get('speed');
 
-    var playerShipWidth = this.$el.find('#player').width(),
-        playerShipHeight = this.$el.find('#player').height();        
+    var playerShipWidth = this.$el.width(),
+        playerShipHeight = this.$el.height();        
 
     var topBoundCoord = 0,
         leftBoundCoord = 0,    
-        bottomBoundCoord = this.$el.find('#field').height() - playerShipHeight,
-        rightBoundCoord = this.$el.find('#field').width() - playerShipWidth;
+        bottomBoundCoord = this.$el.parent().height() - playerShipHeight,
+        rightBoundCoord = this.$el.parent().width() - playerShipWidth;
 
     switch(keyCode) {
       case 38:  
