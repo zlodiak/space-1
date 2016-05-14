@@ -24,28 +24,12 @@ APP.PlayerShipView = Backbone.View.extend({
 
   action: function(e) { 
     if(e.keyCode == 32) { 
-      if(!this._checkPlayerRocketsCnt()) { return };
-
-      //new APP.PlayerRocketView();
-
-      var playerShipWidth = this.$el.width(),
-          playerShipHeight = this.$el.height(),
-          playerRocketModel = new APP.PlayerRocketModel({
-            xCoord: this.model.get('xCoord') + playerShipWidth - 5,
-            yCoord: this.model.get('yCoord') + playerShipHeight -7
-          });
-
-      if(APP.playerRocketCollection.add(playerRocketModel)) {
-        var playerRocket = new APP.PlayerRocketView({model: playerRocketModel}),
-            playerRocketsCnt = this.model.get('rockets');
-
-        this.$el.parent().append(playerRocket.render().el);
-
-        playerRocketsCnt--;
-        this.model.set({rockets: playerRocketsCnt});
-
-        APP.infoLineView.addMessage('Берегите патроны!');
+      if(!this._checkPlayerRocketsCnt()) { 
+        APP.infoLineView.addMessage('Патроны кончились :(');
+        return; 
       };
+
+      new APP.PlayerRocketView();
     } else {
       var newCoords = this._computeCoords(e.keyCode);
 
@@ -125,7 +109,26 @@ APP.PlayerShipView = Backbone.View.extend({
 
 APP.PlayerRocketView = Backbone.View.extend({  
 
-  initialize: function() {     
+  initialize: function() {  
+    var playerShipWidth = $('#' + APP.playerShipView.id).width(),
+        playerShipHeight = $('#' + APP.playerShipView.id).height();//,
+        
+        this.model = new APP.PlayerRocketModel({
+          xCoord: APP.playerModel.get('xCoord') + playerShipWidth - 5,
+          yCoord: APP.playerModel.get('yCoord') + playerShipHeight -7
+        });
+
+    APP.playerRocketCollection.add(this.model);
+
+    $('#' + APP.fieldView.id).append(this.render().el);   
+
+    var playerRocketsCnt = APP.playerModel.get('rockets');
+
+    playerRocketsCnt--;
+    APP.playerModel.set({rockets: playerRocketsCnt});    
+
+    APP.infoLineView.addMessage('Берегите патроны!');
+
     this.listenTo(this.model, 'change', this.render);
     this.listenTo(this.model, 'destroy', this.destroyElem);
   },
@@ -172,8 +175,6 @@ APP.StarView = Backbone.View.extend({
     });   
 
     APP.starsCollection.add(this.model);
-
-    console.log('st ini', APP.starsCollection)
 
     $('#' + this.parentId).append(this.render().el);    
 

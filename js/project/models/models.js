@@ -1,7 +1,7 @@
 APP.PlayerModel = Backbone.Model.extend({
 
   defaults: {
-    rockets: 40,
+    rockets: 10,
     energy: 100,
     speed: 10,
     score: 0,

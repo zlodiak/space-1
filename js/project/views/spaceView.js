@@ -6,7 +6,7 @@ APP.SpaceView = Backbone.View.extend({
     APP.TIME_UNIT_MS = 100;
     APP.STARS_CNT = 100;
 
-    this.playerModel =    new APP.PlayerModel();
+    APP.playerModel =    new APP.PlayerModel();
 
     APP.playerRocketCollection =  new APP.PlayerRocketsCollection();
     APP.starsCollection =         new APP.StarsCollection();    
@@ -14,8 +14,8 @@ APP.SpaceView = Backbone.View.extend({
 
     APP.infoLineView =    new APP.InfolineView({collection: this.infolinesCollection});
     APP.fieldView =      new APP.FieldView();
-    this.informerView =   new APP.InformerView({model: this.playerModel});
-    this.playerShipView = new APP.PlayerShipView({model: this.playerModel});
+    this.informerView =   new APP.InformerView({model: APP.playerModel});
+    APP.playerShipView = new APP.PlayerShipView({model: APP.playerModel});
 
     if(this.render()) {
       this._starsInitialize();  
@@ -40,7 +40,7 @@ APP.SpaceView = Backbone.View.extend({
     this.$el.find('#infoLineWrap').html(APP.infoLineView.render().el);  
     this.$el.find('#fieldWrap').html(APP.fieldView.render().el);  
 
-    this.$el.find('#field').append(this.playerShipView.render().el);  
+    this.$el.find('#field').append(APP.playerShipView.render().el);  
     this._setFocus('player');
 
     return this;

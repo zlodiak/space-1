@@ -104,7 +104,7 @@ APP.InfomessageView = Backbone.View.extend({
 
   className: 'info_message',
 
-  removeElem: function() {  console.log('rr') 
+  removeElem: function() { 
     this.$el.hide(1000, function() {
       this.remove();
     });
