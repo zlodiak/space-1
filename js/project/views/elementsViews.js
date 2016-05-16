@@ -310,7 +310,8 @@ APP.StoneView = Backbone.View.extend({
     var sizesArr = [20, 40, 60],      
         sizesCnt =  sizesArr.length,      
         sizeIndex =  APP.helper.randomIntFromZero(sizesCnt),
-        size = sizesArr[sizeIndex];
+        size = sizesArr[sizeIndex],
+        sizeMax = sizesArr[sizesCnt - 1];
 
     var shapesClassArr = ['stone_0', 'stone_1', 'stone_2', 'stone_3'],      
         shapesClassCnt =  shapesClassArr.length,      
@@ -318,7 +319,12 @@ APP.StoneView = Backbone.View.extend({
         shapeClass = shapesClassArr[shapeClassIndex];
 
     var xCoordRandom =  APP.helper.randomIntFromZero(fieldWidth) * 2, // hardcode(
-        yCoordRandom =  APP.helper.randomIntFromZero(fieldHeight);
+        yCoordRandom =  APP.helper.randomIntFromZero(fieldHeight),
+        fieldHeight = $('#' + APP.fieldView.id).height();
+
+    if(yCoordRandom > (fieldHeight - sizeMax)) {
+      yCoordRandom -= sizeMax;
+    };
 
     this.model = new APP.StoneModel({
       xCoord: xCoordRandom,
