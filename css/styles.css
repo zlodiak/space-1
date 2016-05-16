@@ -40,7 +40,31 @@ body{
 }
 
 
+/****************************************************************************** GLOBAL_blocks: stone */
+.stone{
+	position: absolute;
+	z-index: 0;
+}
 
+.stone_0{
+	background: url('../images/stones/stone_0.png') center center no-repeat;
+	background-size: cover;
+}
+
+.stone_1{
+	background: url('../images/stones/stone_1.png') center center no-repeat;
+	background-size: cover;
+}
+
+.stone_2{
+	background: url('../images/stones/stone_2.png') center center no-repeat;
+	background-size: cover;
+}
+
+.stone_3{
+	background: url('../images/stones/stone_3.png') center center no-repeat;
+	background-size: cover;
+}
 
 /****************************************************************************** GLOBAL_blocks: star */
 .star{

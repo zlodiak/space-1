@@ -257,9 +257,9 @@ APP.StoneView = Backbone.View.extend({
 
     APP.stonesCollection.add(this._modelCreate());
 
-/*    $('#' + APP.fieldView.id).append(this.render().el);    
+    $('#' + APP.fieldView.id).append(this.render().el);    
 
-    setInterval(function() {
+/*    setInterval(function() {
       self._move()
     }, APP.TIME_UNIT_MS);          
 
@@ -270,7 +270,11 @@ APP.StoneView = Backbone.View.extend({
   className: 'stone',
 
   render: function() {    
+    this.$el.addClass(this.model.get('shapeClass'));
+
     this.$el.css({
+      width: this.model.get('size'),
+      height: this.model.get('size'),
       top: this.model.get('yCoord'),
       left: this.model.get('xCoord')
     }).html();   
@@ -278,7 +282,7 @@ APP.StoneView = Backbone.View.extend({
     return this;
   },
 
-/*  destroyElem: function() {   
+  destroyElem: function() {   
     this.$el.remove();
   },
 
@@ -297,7 +301,7 @@ APP.StoneView = Backbone.View.extend({
         yCoord: APP.helper.randomIntFromZero(fieldHeight),
       });
     };        
-  }, */
+  }, 
 
   _modelCreate: function() {  
     var fieldWidth = $('#' + APP.fieldView.id).width(),
@@ -308,12 +312,18 @@ APP.StoneView = Backbone.View.extend({
         sizeIndex =  APP.helper.randomIntFromZero(sizesCnt),
         size = sizesArr[sizeIndex];
 
+    var shapesClassArr = ['stone_0', 'stone_1', 'stone_2', 'stone_3'],      
+        shapesClassCnt =  shapesClassArr.length,      
+        shapeClassIndex =  APP.helper.randomIntFromZero(shapesClassCnt),
+        shapeClass = shapesClassArr[shapeClassIndex];
+
     var xCoordRandom =  APP.helper.randomIntFromZero(fieldWidth),
         yCoordRandom =  APP.helper.randomIntFromZero(fieldHeight);
 
     this.model = new APP.StoneModel({
       xCoord: xCoordRandom,
       yCoord: yCoordRandom,
+      shapeClass: shapeClass,
       size: size
     });   
 
