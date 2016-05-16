@@ -288,12 +288,13 @@ APP.StoneView = Backbone.View.extend({
 
   _move: function() {   
     var speed = this.model.get('speed'),
+        size = this.model.get('size'),
         xCoord = this.model.get('xCoord'),
         xCoordNew =   xCoord - speed,
         fieldWidth =  this.$el.parent().width(),
         fieldHeight = this.$el.parent().height();
 
-    if(xCoordNew > 0) { 
+    if(xCoordNew > -size) { 
       this.model.set({xCoord: xCoordNew});
     } else {  
       this.model.set({
