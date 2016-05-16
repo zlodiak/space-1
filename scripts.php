@@ -13,6 +13,8 @@
 <script src="js/project/views/spaceView.js"></script> 
 <script src="js/project/views/widgetsViews.js"></script> 
 <script src="js/project/views/elementsViews.js"></script> 
+<script src="js/project/views/playerShipView.js"></script> 
+<script src="js/project/views/stoneView.js"></script> 
 <script src="js/project/helper.js"></script> 
 
 <script>
