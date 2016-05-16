@@ -5,6 +5,7 @@ APP.SpaceView = Backbone.View.extend({
 
     APP.TIME_UNIT_MS = 100;
     APP.STARS_CNT = 100;
+    APP.STONES_CNT = 10;
 
     this._modelsInitialize();
     this._collectionsInitialize();
@@ -12,6 +13,7 @@ APP.SpaceView = Backbone.View.extend({
 
     if(this.render()) {
       this._starsInitialize();    
+      this._stonesInitialize();    
     };        
 
     $('body').on('click', function() {
@@ -45,6 +47,12 @@ APP.SpaceView = Backbone.View.extend({
     };
   },
 
+  _stonesInitialize: function() {   
+    for(var i = 0; i < APP.STONES_CNT; i++) {
+      new APP.StoneView();
+    };
+  },  
+
   _modelsInitialize: function() { 
     APP.playerModel = new APP.PlayerModel();
   },
@@ -52,6 +60,7 @@ APP.SpaceView = Backbone.View.extend({
   _collectionsInitialize: function() { 
     APP.playerRocketCollection =  new APP.PlayerRocketsCollection();
     APP.starsCollection =         new APP.StarsCollection();    
+    APP.stonesCollection =        new APP.StonesCollection();    
     this.infolinesCollection =    new APP.InfolinesCollection();
   },
 

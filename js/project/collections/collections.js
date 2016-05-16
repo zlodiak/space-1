@@ -23,3 +23,10 @@ APP.InfolinesCollection = Backbone.Collection.extend({
   model: APP.InfoMessageModel,
 
 });
+
+
+APP.StonesCollection = Backbone.Collection.extend({
+
+  model: APP.StoneModel,
+
+});

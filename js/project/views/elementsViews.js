@@ -250,4 +250,80 @@ APP.StarView = Backbone.View.extend({
 });
 
 
+APP.StoneView = Backbone.View.extend({    
+
+  initialize: function() {  
+    var self = this;
+
+    APP.stonesCollection.add(this._modelCreate());
+
+/*    $('#' + APP.fieldView.id).append(this.render().el);    
+
+    setInterval(function() {
+      self._move()
+    }, APP.TIME_UNIT_MS);          
+
+    this.listenTo(this.model, 'change', this.render);
+    this.listenTo(this.model, 'destroy', this.destroyElem);*/
+  },
+
+  className: 'stone',
+
+  render: function() {    
+    this.$el.css({
+      top: this.model.get('yCoord'),
+      left: this.model.get('xCoord')
+    }).html();   
+
+    return this;
+  },
+
+/*  destroyElem: function() {   
+    this.$el.remove();
+  },
+
+  _move: function() {   
+    var speed = this.model.get('speed'),
+        xCoord = this.model.get('xCoord'),
+        xCoordNew =   xCoord - speed,
+        fieldWidth =  this.$el.parent().width(),
+        fieldHeight = this.$el.parent().height();
+
+    if(xCoordNew > 0) { 
+      this.model.set({xCoord: xCoordNew});
+    } else {  
+      this.model.set({
+        xCoord: fieldWidth,
+        yCoord: APP.helper.randomIntFromZero(fieldHeight),
+      });
+    };        
+  }, */
+
+  _modelCreate: function() {  
+    var fieldWidth = $('#' + APP.fieldView.id).width(),
+        fieldHeight = $('#' + APP.fieldView.id).height(); 
+
+    var sizesArr = [20, 40, 60],      
+        sizesCnt =  sizesArr.length,      
+        sizeIndex =  APP.helper.randomIntFromZero(sizesCnt),
+        size = sizesArr[sizeIndex];
+
+    var xCoordRandom =  APP.helper.randomIntFromZero(fieldWidth),
+        yCoordRandom =  APP.helper.randomIntFromZero(fieldHeight);
+
+    this.model = new APP.StoneModel({
+      xCoord: xCoordRandom,
+      yCoord: yCoordRandom,
+      size: size
+    });   
+
+    //console.log(this.model, '-----')
+
+    return this.model;
+  }  
+
+});
+
+
+
 

@@ -72,7 +72,8 @@ APP.StoneModel = Backbone.Model.extend({
   defaults: {
     xCoord: undefined,
     yCoord: undefined,
-    size: undefined
+    size: undefined,
+    speed: 2
   }        
 
 });
