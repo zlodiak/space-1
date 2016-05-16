@@ -52,6 +52,8 @@ APP.StoneView = Backbone.View.extend({
         yp2 = yCoordPlayer + size,
         xp1 = xCoordPlayer,
         xp2 = xCoordPlayer + size;        
+
+    // to do check collisions
   },
 
   _move: function() {   
