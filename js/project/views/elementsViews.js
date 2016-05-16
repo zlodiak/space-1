@@ -259,12 +259,12 @@ APP.StoneView = Backbone.View.extend({
 
     $('#' + APP.fieldView.id).append(this.render().el);    
 
-/*    setInterval(function() {
+    setInterval(function() {
       self._move()
     }, APP.TIME_UNIT_MS);          
 
     this.listenTo(this.model, 'change', this.render);
-    this.listenTo(this.model, 'destroy', this.destroyElem);*/
+    this.listenTo(this.model, 'destroy', this.destroyElem);
   },
 
   className: 'stone',
@@ -297,7 +297,7 @@ APP.StoneView = Backbone.View.extend({
       this.model.set({xCoord: xCoordNew});
     } else {  
       this.model.set({
-        xCoord: fieldWidth,
+        xCoord: fieldWidth * this.model.get('rangeHoriz'),
         yCoord: APP.helper.randomIntFromZero(fieldHeight),
       });
     };        
@@ -317,7 +317,7 @@ APP.StoneView = Backbone.View.extend({
         shapeClassIndex =  APP.helper.randomIntFromZero(shapesClassCnt),
         shapeClass = shapesClassArr[shapeClassIndex];
 
-    var xCoordRandom =  APP.helper.randomIntFromZero(fieldWidth),
+    var xCoordRandom =  APP.helper.randomIntFromZero(fieldWidth) * 2, // hardcode(
         yCoordRandom =  APP.helper.randomIntFromZero(fieldHeight);
 
     this.model = new APP.StoneModel({
@@ -326,8 +326,6 @@ APP.StoneView = Backbone.View.extend({
       shapeClass: shapeClass,
       size: size
     });   
-
-    //console.log(this.model, '-----')
 
     return this.model;
   }  

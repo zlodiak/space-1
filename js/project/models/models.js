@@ -74,7 +74,8 @@ APP.StoneModel = Backbone.Model.extend({
     yCoord: undefined,
     shapeClass: undefined,
     size: undefined,
-    speed: 2
+    speed: 4,
+    rangeHoriz: 2
   }        
 
 });
