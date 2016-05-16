@@ -9,7 +9,8 @@ APP.StoneView = Backbone.View.extend({
     $('#' + APP.fieldView.id).append(this.render().el);    
 
     setInterval(function() {
-      self._move()
+      self._move();
+      self._checkPlayerCollision();
     }, APP.TIME_UNIT_MS);          
 
     this.listenTo(this.model, 'change', this.render);
@@ -33,6 +34,24 @@ APP.StoneView = Backbone.View.extend({
 
   destroyElem: function() {   
     this.$el.remove();
+  },
+
+  _checkPlayerCollision: function() {  
+    var xCoord =  this.model.get('xCoord'),
+        yCoord =  this.model.get('yCoord'),
+        size =    this.model.get('size'),
+        y1 = yCoord,
+        y2 = yCoord + size,
+        x1 = xCoord,
+        x2 = xCoord + size;
+
+    var xCoordPlayer =  APP.playerModel.get('xCoord'),
+        yCoordPlayer =  APP.playerModel.get('yCoord'),
+        sizePlayer =    APP.playerModel.get('size'),
+        yp1 = yCoordPlayer,
+        yp2 = yCoordPlayer + size,
+        xp1 = xCoordPlayer,
+        xp2 = xCoordPlayer + size;        
   },
 
   _move: function() {   

@@ -69,6 +69,10 @@ APP.SpaceView = Backbone.View.extend({
     APP.fieldView =      new APP.FieldView();
     this.informerView =  new APP.InformerView({model: APP.playerModel});
     APP.playerShipView = new APP.PlayerShipView({model: APP.playerModel});
+  },
+
+  _gameOver: function() { 
+    alert('Вы погибли');
   }    
  
 });
