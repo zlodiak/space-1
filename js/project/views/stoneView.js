@@ -10,7 +10,6 @@ APP.StoneView = Backbone.View.extend({
 
     setInterval(function() {
       self._move();
-      self._checkPlayerCollision();
     }, APP.TIME_UNIT_MS);          
 
     this.listenTo(this.model, 'change', this.render);
@@ -34,35 +33,6 @@ APP.StoneView = Backbone.View.extend({
 
   destroyElem: function() {   
     this.$el.remove();
-  },
-
-  _checkPlayerCollision: function() {  
-    var xCoord =  this.model.get('xCoord'),
-        yCoord =  this.model.get('yCoord'),
-        size =    this.model.get('size'),
-        y1 = yCoord,
-        y2 = yCoord + size,
-        x1 = xCoord,
-        x2 = xCoord + size;
-
-    var xCoordPlayer =  APP.playerModel.get('xCoord'),
-        yCoordPlayer =  APP.playerModel.get('yCoord'),
-        widthPlayer =    $('#player').width(),
-        heightPlayer =   $('#player').height(),
-        yp1 = yCoordPlayer,
-        yp2 = yCoordPlayer + heightPlayer,
-        xp1 = xCoordPlayer,
-        xp2 = xCoordPlayer + widthPlayer;    
-
-    if((yp2 >= y1 && yp2 <= y2) && ((xp2 >= x1 && xp2 <= x2) || (xp1 <= x2 && xp2 >= x1))) {
-      APP.infoLineView.addMessage('Столкновение с астероидом!');
-      //app._gameOver();
-    };
-
-    if((yp1 <= y2 && yp1 >= y1) && ((xp2 >= x1 && xp2 <= x2) || (xp1 <= x2 && xp2 >= x1))) {
-      APP.infoLineView.addMessage('Столкновение с астероидом!');
-      //app._gameOver();
-    };    
   },
 
   _move: function() {   
