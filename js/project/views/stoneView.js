@@ -47,13 +47,22 @@ APP.StoneView = Backbone.View.extend({
 
     var xCoordPlayer =  APP.playerModel.get('xCoord'),
         yCoordPlayer =  APP.playerModel.get('yCoord'),
-        sizePlayer =    APP.playerModel.get('size'),
+        widthPlayer =    $('#player').width(),
+        heightPlayer =   $('#player').height(),
         yp1 = yCoordPlayer,
-        yp2 = yCoordPlayer + size,
+        yp2 = yCoordPlayer + heightPlayer,
         xp1 = xCoordPlayer,
-        xp2 = xCoordPlayer + size;        
+        xp2 = xCoordPlayer + widthPlayer;    
 
-    // to do check collisions
+    if((yp2 >= y1 && yp2 <= y2) && ((xp2 >= x1 && xp2 <= x2) || (xp1 <= x2 && xp2 >= x1))) {
+      APP.infoLineView.addMessage('Столкновение с астероидом!');
+      //app._gameOver();
+    };
+
+    if((yp1 <= y2 && yp1 >= y1) && ((xp2 >= x1 && xp2 <= x2) || (xp1 <= x2 && xp2 >= x1))) {
+      APP.infoLineView.addMessage('Столкновение с астероидом!');
+      //app._gameOver();
+    };    
   },
 
   _move: function() {   
