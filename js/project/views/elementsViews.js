@@ -10,7 +10,8 @@ APP.PlayerRocketView = Backbone.View.extend({
     this._rocketsDecrement();
 
     setInterval(function() {
-      self._move()
+      self._move();
+      self._checkCollisPlayerStone();
     }, APP.TIME_UNIT_MS);       
 
     this.listenTo(this.model, 'change', this.render);
@@ -65,8 +66,45 @@ APP.PlayerRocketView = Backbone.View.extend({
     playerRocketsCnt--;
     APP.playerModel.set({rockets: playerRocketsCnt});    
 
-    APP.infoLineView.addMessage('Берегите ракеты!');
-  }  
+    if(playerRocketsCnt < 10) {
+      APP.infoLineView.addMessage('Берегите ракеты!');
+    };    
+  },
+
+  _checkCollisPlayerStone: function() { 
+    var self = this;
+
+    APP.stonesCollection.each(function(stoneModel) { console.log(self.model)  
+      var xCoord =  stoneModel.get('xCoord'),
+          yCoord =  stoneModel.get('yCoord'),
+          size =    stoneModel.get('size'),
+          y1 = yCoord,
+          y2 = yCoord + size,
+          x1 = xCoord,
+          x2 = xCoord + size;
+
+      var xCoordRocket =  self.model.get('xCoord'),
+          yCoordRocket =  self.model.get('yCoord'),
+          widthRocket =   $('#' + self.model.id).width(),
+          heightRocket =  $('#' + self.model.id).height(),
+          yr1 = yCoordRocket,
+          yr2 = yCoordRocket + heightRocket,
+          xr1 = xCoordRocket,
+          xr2 = xCoordRocket + widthRocket;     
+
+
+
+      if((yr2 >= y1 && yr2 <= y2) && ((xr2 >= x1 && xr2 <= x2) || (xr1 <= x2 && xr2 >= x1))) {
+        APP.infoLineView.addMessage('Попадание в астероид');
+        //app._gameOver();
+      };
+
+      if((yr1 <= y2 && yr1 >= y1) && ((xr2 >= x1 && xr2 <= x2) || (xr1 <= x2 && xr2 >= x1))) {
+        APP.infoLineView.addMessage('Попадание в астероид');
+        //app._gameOver();
+      };
+    });
+  },        
 
 });
 

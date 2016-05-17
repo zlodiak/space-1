@@ -1,7 +1,7 @@
 APP.PlayerModel = Backbone.Model.extend({
 
   defaults: {
-    rockets: 10,
+    rockets: 15,
     energy: 100,
     speed: 10,
     score: 0,
@@ -23,8 +23,6 @@ APP.EnemyModel = Backbone.Model.extend({
 
 
 APP.PlayerRocketModel = Backbone.Model.extend({
-
-  //localStorage: new Backbone.LocalStorage('rocketsList'),
   
   defaults: {
     xCoord: undefined,
