@@ -11,7 +11,11 @@ APP.PlayerRocketView = Backbone.View.extend({
 
     setInterval(function() {
       self._move();
-      self._checkCollisPlayerStone();
+
+      if(self._checkCollisPlayerStone()) {
+        APP.infoLineView.addMessage('Попадание в астероид');
+      };
+      
     }, APP.TIME_UNIT_MS);       
 
     this.listenTo(this.model, 'change', this.render);
@@ -72,9 +76,10 @@ APP.PlayerRocketView = Backbone.View.extend({
   },
 
   _checkCollisPlayerStone: function() { 
-    var self = this;
+    var self = this,
+        result;
 
-    APP.stonesCollection.each(function(stoneModel) { console.log(self.model)  
+    APP.stonesCollection.each(function(stoneModel) { 
       var xCoord =  stoneModel.get('xCoord'),
           yCoord =  stoneModel.get('yCoord'),
           size =    stoneModel.get('size'),
@@ -93,13 +98,15 @@ APP.PlayerRocketView = Backbone.View.extend({
           xr2 = xCoordRocket + widthRocket;     
 
       if((yr2 >= y1 && yr2 <= y2) && ((xr2 >= x1 && xr2 <= x2) || (xr1 <= x2 && xr2 >= x1))) {
-        APP.infoLineView.addMessage('Попадание в астероид');
+        result = true;
       };
 
       if((yr1 <= y2 && yr1 >= y1) && ((xr2 >= x1 && xr2 <= x2) || (xr1 <= x2 && xr2 >= x1))) {
-        APP.infoLineView.addMessage('Попадание в астероид');
+        result = true;
       };
     });
+
+    return result;
   },        
 
 });

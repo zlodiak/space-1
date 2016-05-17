@@ -12,7 +12,7 @@
 <script src="js/project/collections/collections.js"></script> 
 <script src="js/project/views/spaceView.js"></script> 
 <script src="js/project/views/widgetsViews.js"></script> 
-<script src="js/project/views/elementsViews.js"></script> 
+<script src="js/project/views/starsView.js"></script> 
 <script src="js/project/views/playerShipView.js"></script> 
 <script src="js/project/views/stoneView.js"></script> 
 <script src="js/project/views/playerRocketView.js"></script> 
