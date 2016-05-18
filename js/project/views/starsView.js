@@ -1,6 +1,3 @@
-
-
-
 APP.StarView = Backbone.View.extend({  
 
   initialize: function() {   
